@@ -1,0 +1,80 @@
+﻿{% set currentLang = lang | default("hr") %}
+{% set t = i18n[currentLang] | default(i18n.hr) %}
+<div data-animation="default" class="navbar07_component w-nav" data-easing2="ease" data-easing="ease" data-collapse="medium" role="banner" data-duration="400">
+  <div class="navbar07_container">
+    <div class="navbar07_menu-button w-nav-button">
+      <div class="menu-icon_component">
+        <div class="menu-icon_line-top"></div>
+        <div class="menu-icon_line-middle"><div class="menu-icon_line-middle-inner"></div></div>
+        <div class="menu-icon_line-bottom"></div>
+      </div>
+    </div>
+
+    <div class="logos-container">
+      <a href="{{ t.home_href | default('/hr/') }}" class="navbar07_logo-link hide-mobile-portrait hide-tablet hide-mobile-landscape w-nav-brand">
+        <div class="uui-styleguide_logo"><div class="uui-styleguide_logomark"><img src="/assets/images/final/extra/FOTKE%20ZA%20VREMEPLOV/logo%20novi%20Digitron.Buje%20informati%C4%8Dka%20pri%C4%8Da%20copy%206.png" loading="eager" alt="{{ t.logo_alt | default('digitron.buje logo') }}" class="uui-styleguide_logomark-bg header-logo-image"/></div></div>
+      </a>
+      <a href="{{ t.home_href | default('/hr/') }}" class="navbar07_logo-link mobile-size-logo hide-on-desktop w-nav-brand">
+        <div class="uui-styleguide_logo"><div class="uui-styleguide_logomark"><img src="/assets/images/final/extra/FOTKE%20ZA%20VREMEPLOV/logo%20novi%20Digitron.Buje%20informati%C4%8Dka%20pri%C4%8Da%20copy%206.png" loading="eager" alt="{{ t.logo_alt | default('digitron.buje logo') }}" class="uui-styleguide_logomark-bg header-logo-image"/></div></div>
+      </a>
+    </div>
+
+    <nav role="navigation" class="navbar07_menu w-nav-menu">
+      <div class="navbar07_menu-left">
+        <a href="{{ nav.home.href }}" class="navbar07_link text-size-regular w-nav-link{% if page.url == nav.home.href %} w--current{% endif %}">{{ nav.home.label }}</a>
+
+        {% for section in nav.sections %}
+        {% if section.href %}
+        <a href="{{ section.href }}" class="navbar07_link w-nav-link{% if page.url == section.href %} w--current{% endif %}">{{ section.title }}</a>
+        {% else %}
+        <div data-hover="true" data-delay="300" class="navbar07_menu-dropdown navbar07_menu-dropdown-main w-dropdown">
+          <div class="navbar07_dropdown-toggle w-dropdown-toggle">
+            <div class="dropdown-icon-2 w-embed">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="1.67" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div class="text-size-regular">{{ section.title }}</div>
+          </div>
+          <nav class="navbar07_dropdown-list w-dropdown-list">
+            <div class="navbar07_dropdown-link-list">
+              {% for item in section.items %}
+              <a href="{{ item.href }}" class="navbar07_dropdown-link-2 w-inline-block{% if page.url == item.href %} w--current{% endif %}">
+                <div class="navbar07_item-right">
+                  <div class="margin-bottom margin-tiny"><div class="text-weight-bold">{{ item.label }}</div></div>
+                </div>
+              </a>
+              {% endfor %}
+            </div>
+          </nav>
+        </div>
+        {% endif %}
+        {% endfor %}
+
+        <a href="{{ nav.contact.href }}" class="navbar07_link text-size-regular w-nav-link">{{ nav.contact.label }}</a>
+      </div>
+
+      <div class="navbar07_menu-right-2">
+        <div class="navbar07_button-wrapper">
+          <div data-hover="true" data-delay="300" class="navbar07_menu-dropdown navbar07_menu-dropdown-lang w-dropdown">
+            <div class="nav-dropdown-list w-dropdown-toggle">
+              <div class="dropdown-icon-2 w-embed">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="1.67" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+              <div class="text-block">{{ t.language_code | default("HR") }}</div>
+            </div>
+            <nav class="navbar07_dropdown-list w-dropdown-list">
+              <div class="navbar07_dropdown-link-list">
+                {% for language in nav.languages %}
+                <a href="{{ language.href }}" class="navbar07_dropdown-link-2 w-inline-block">
+                  <div class="navbar07_item-right"><div class="margin-bottom margin-tiny"><div class="text-weight-normal-2">{{ language.label }}</div></div></div>
+                </a>
+                {% endfor %}
+              </div>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </div>
+</div>
+
+

@@ -1,0 +1,24 @@
+﻿HR asset konsolidacija - 2026-02-25
+
+Struktura kreirana (bez moveova postojećih page foldera):
+/hr/index.html
+/hr/digitron-i-buje/
+/hr/razni-kalkulatori-i-njihove-price/
+/assets/{css,js,images,audio,video,fonts}
+
+Kopiranje u inbox:
+- source *_files foldera: 15
+- kopirano slika: 219
+
+Dedupe:
+- unique po SHA256: 31
+- deduplicirano u /assets/images/final
+
+Ključni semantic aliasi dodani u final:
+- ar-icon.png
+- retrobit-logo.svg
+- eu-logo.png
+- pozadina-za-sliku.svg
+- map-pin.svg
+- pitagora-2000.png
+- qr-ar.svg (iz postojeceg /images)

@@ -1,0 +1,46 @@
+﻿{
+  "home": { "href": "/hr/", "label": "Početna stranica" },
+  "vremeplov": { "href": "/hr/vremeplov/", "label": "Vremeplov" },
+  "contact": { "href": "/impressum", "label": "Kontakt" },
+  "sections": [
+    {
+      "title": "Vremeplov",
+      "href": "/hr/vremeplov/"
+    },
+    {
+      "title": "Razvoj strojeva za računanje",
+      "items": [
+        { "href": "/hr/razvoj-strojeva-za-racunanje/anticki-i-mehanicki-kalkulatori/", "label": "Antički i mehanički kalkulatori" },
+        { "href": "/hr/razvoj-strojeva-za-racunanje/elektromehanicki-kalkulatori/", "label": "Elektromehanički kalkulatori" },
+        { "href": "/hr/razvoj-strojeva-za-racunanje/digitalni-kalkulatori/", "label": "Digitalni kalkulatori" }
+      ]
+    },
+    {
+      "title": "Digitron i Buje",
+      "items": [
+        { "href": "/hr/digitron-i-buje/i-bi-digitron/", "label": "I bi Digitron" },
+        { "href": "/hr/digitron-i-buje/na-tehnoloskom-tronu/", "label": "Na tehnološkom tronu" },
+        { "href": "/hr/digitron-i-buje/bujanje-buja/", "label": "Bujanje Buja" },
+        { "href": "/hr/digitron-i-buje/kultura-i-sport/", "label": "Kultura i sport" }
+      ]
+    },
+    {
+      "title": "Svijet kalkulatora",
+      "items": [
+        { "href": "/hr/razni-kalkulatori-i-njihove-price/kalkuliranje-po-naski/", "label": "Kalkuliranje po naški" },
+        { "href": "/hr/razni-kalkulatori-i-njihove-price/svjetski-igraci/", "label": "Svjetski igrači" },
+        { "href": "/hr/razni-kalkulatori-i-njihove-price/hladnoratovske-kalkulacije/", "label": "Hladnoratovske kalkulacije" },
+        { "href": "/hr/razni-kalkulatori-i-njihove-price/neobicne-namjene/", "label": "Neobične namjene" },
+        { "href": "/hr/razni-kalkulatori-i-njihove-price/povratak-u-buducnost/", "label": "Povratak u budućnost" }
+      ]
+    }
+  ],
+  "languages": [
+    { "code": "HR", "label": "Hrvatski", "href": "#" },
+    { "code": "IT", "label": "Italiano", "href": "/it/" },
+    { "code": "EN", "label": "English", "href": "/en/" }
+  ]
+}
+
+
+

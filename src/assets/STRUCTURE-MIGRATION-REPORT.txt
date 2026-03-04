@@ -1,0 +1,13 @@
+﻿HR struktura + path migracija - 2026-02-25
+
+Odradeno:
+- Premjesten sadrzaj /digitron-i-buje -> /hr/digitron-i-buje
+- Premjesten sadrzaj /razni-kalkulatori-i-njihove-price -> /hr/razni-kalkulatori-i-njihove-price
+- Premjesten /css -> /assets/css i /js -> /assets/js
+- Kopirane slike iz starog /images u /assets/images/final (missing-only)
+- Preusmjerene HR HTML/CSS putanje na /assets/* i /hr/*
+- Uklonjeni stari *_files i nested duplikati iz /hr/razni-kalkulatori-i-njihove-price
+- Preimenovan stari root /images -> /images-legacy
+
+Napomena:
+- Root /index.html i /razvoj-strojeva-za-racunanje ostavljeni su netaknuti kao legacy dio.

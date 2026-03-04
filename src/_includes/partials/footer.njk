@@ -1,0 +1,51 @@
+﻿{% set currentLang = lang | default("hr") %}
+{% set t = i18n[currentLang] | default(i18n.hr) %}
+<section class="footer">
+  <footer class="footer3_component">
+    <div class="padding-global">
+      <div class="container-large-4">
+        <div class="padding-vertical padding-xxlarge">
+          <div class="padding-bottom padding-xxlarge">
+            <div class="w-layout-grid footer3_top-wrapper">
+              <div class="footer3_left-wrapper">
+                <div class="margin-bottom margin-medium">
+                  <a href="{{ t.home_href | default('/hr/') }}" class="footer3_logo-link w-nav-brand"><img src="/assets/images/final/extra/FOTKE%20ZA%20VREMEPLOV/logo%20novi%20Digitron.Buje%20informati%C4%8Dka%20pri%C4%8Da%20copy%206.png" loading="lazy" alt="{{ t.logo_alt | default('digitron.buje logo') }}" class="logo-footer"/></a>
+                </div>
+                <div class="margin-bottom margin-small">
+                  <div class="footer3_details-wrapper">
+                    <div class="margin-bottom margin-xxsmall"><div class="text-ime-galerije">{{ t.footer_brand_name | default("digitron.buje") }}</div></div>
+                    <div class="margin-bottom margin-xxsmall"><div class="naslov-radno-vrijeme">{{ t.footer_tagline | default("Digitalna interpretacija industrijske baštine Buja") }}</div></div>
+                    <div class="margin-bottom margin-xxsmall"><div class="text-dodatni-info">{{ t.footer_project_label | default("Projekt Grada Buja - Buie") }}</div></div>
+                    <div class="margin-bottom margin-xxsmall"><div class="text-tel-radno">{{ t.footer_copyright | default("© 2026 Digitron Buje") }}</div></div>
+                  </div>
+                </div>
+              </div>
+
+              <div id="w-node-footer-nav" class="w-layout-grid footer1_menu-wrapper">
+                {% for section in nav.sections %}
+                <div class="footer1_link-list">
+                  <div class="margin-bottom margin-xsmall"><div class="text-weight-semibold-2">{{ section.title }}</div></div>
+                  {% for item in section.items %}
+                  <a href="{{ item.href }}" class="footer1_link{% if page.url == item.href %} w--current{% endif %}">{{ item.label }}</a>
+                  {% endfor %}
+                  {% if loop.last %}
+                  <a href="{{ t.impressum_href | default('/impressum') }}" class="footer1_link link-impressum">{{ t.impressum_label | default("Impressum") }}</a>
+                  {% endif %}
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+          <div class="line-divider"></div>
+        </div>
+      </div>
+    </div>
+  </footer>
+</section>
+
+<div class="html-embed w-embed">
+  <audio id="track" preload="metadata">
+    <source src="{{ audioSrc | default('/assets/audio/hr/04-i-bi-digitron.mp3') }}" type="audio/mpeg" />
+  </audio>
+</div>
+

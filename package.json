@@ -1,0 +1,14 @@
+﻿{
+  "name": "retrobit-eleventy",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Eleventy migration sandbox for Retrobit",
+  "scripts": {
+    "dev": "npx @11ty/eleventy --serve",
+    "dev:lan": "npx @11ty/eleventy --serve --host 0.0.0.0 --port 8080",
+    "build": "npx @11ty/eleventy"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^3.0.0"
+  }
+}

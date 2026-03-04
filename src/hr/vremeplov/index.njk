@@ -1,0 +1,121 @@
+﻿---
+layout: layouts/base.njk
+title: Vremeplov
+lang: hr
+useTimelineStyles: true
+---
+<main class="page page-vremeplov" id="top">
+  <header class="hero hero-vremeplov">
+    <div class="container-large-2">
+      <h1 class="hero__title">Vremeplov</h1>
+    </div>
+  </header>
+
+  <section class="topline" aria-label="Linija vremena (pregled)">
+    <div class="topline__sticky">
+      <div class="container-large-2">
+        <div class="topline__scroller">
+          {% set totalDuration = 0 %}
+          {% for segment in vremeplov_hr.config.segments %}
+          {% set totalDuration = totalDuration + (segment.toYear - segment.fromYear) %}
+          {% endfor %}
+          {% set timelineStart = vremeplov_hr.config.segments[0].fromYear %}
+          {% set timelineEnd = vremeplov_hr.config.presentYear %}
+          {% set zeroPosition = ((0 - timelineStart) / (timelineEnd - timelineStart)) * 100 %}
+          <div class="topline__durationWrap" aria-hidden="true">
+            <div class="topline__durationScale">
+              <span class="durationScale__label is-start" style="left: 0%;">10 000. pr. n. e.</span>
+              <span class="durationScale__label is-mid" style="left: {{ zeroPosition }}%;">0.</span>
+              <span class="durationScale__label is-end-right" style="left: 100%;">sadašnjost</span>
+            </div>
+            <div class="topline__durationBar">
+              {% for segment in vremeplov_hr.config.segments %}
+              {% set duration = segment.toYear - segment.fromYear %}
+              <span class="durationBar__seg seg--{{ segment.key }}" style="--seg-ratio: {{ duration }};"></span>
+              {% endfor %}
+            </div>
+          </div>
+          <div class="topline__bus" aria-hidden="true">
+            <svg class="topline__busSvg"></svg>
+          </div>
+
+          <div class="topline__segments">
+            <div class="topline__track" role="navigation" aria-label="Navigacija kroz vrijeme">
+            {% for segment in vremeplov_hr.config.segments %}
+            <div class="topline__segment seg seg--{{ segment.key }}" data-seg="{{ segment.key }}" style="--seg-ratio: {{ segment.widthRatio }};">
+              <div class="seg__head">
+                <span class="seg__title">{{ segment.label }}</span>
+                <span class="seg__range">{{ segment.rangeLabel }}</span>
+              </div>
+
+              <div class="seg__line">
+                {% for event in vremeplov_hr.events %}
+                {% if event.segment == segment.key %}
+                {% set left = ((event.yearSort - segment.fromYear) / (segment.toYear - segment.fromYear)) * 100 %}
+                {% set markerLabel = event.yearLabel %}
+                {% set isMechanicalStart = segment.key == 'mechanical' and event.yearSort == segment.fromYear %}
+                {% set isLeftAlignedLabel = (segment.key == 'mechanical' and event.id == 't-1673-1694') or event.id == 't-2019-quantum' %}
+                <button class="mk{% if event.isFeatured %} mk--featured{% else %} mk--global{% endif %}{% if isMechanicalStart %} mk--vertical-label{% endif %}{% if isLeftAlignedLabel %} mk--label-from-dot{% endif %}" type="button" data-target="{{ event.id }}" aria-label="{{ event.yearLabel }} - {{ event.title }}" style="left: {{ left }}%;">
+                  <span class="mk__dot" aria-hidden="true"></span>
+                  <span class="mk__label">{{ markerLabel }}</span>
+                </button>
+                {% endif %}
+                {% endfor %}
+              </div>
+            </div>
+            {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="vtimeline" aria-label="Vremeplov kroz vrijeme">
+    <div class="vtimeline__snap">
+      {% for event in vremeplov_hr.events %}
+      {% set nextEvent = vremeplov_hr.events[loop.index0 + 1] %}
+      {% if nextEvent %}
+      {% set delta = nextEvent.yearSort - event.yearSort %}
+      {% else %}
+      {% set delta = 24 %}
+      {% endif %}
+      {% set gapClass = "sm" %}
+      {% if delta > 4000 %}{% set gapClass = "xxl" %}{% elseif delta > 1000 %}{% set gapClass = "xl" %}{% elseif delta > 200 %}{% set gapClass = "lg" %}{% elseif delta > 50 %}{% set gapClass = "md" %}{% endif %}
+      {% set axisYear = event.yearLabel %}
+      <article class="vtimeline-step{% if event.isFeatured %} is-featured{% endif %}" id="{{ event.id }}" data-id="{{ event.id }}" data-seg="{{ event.segment }}" data-gap="{{ gapClass }}">
+        <div class="vtimeline-step__inner container-large-2">
+          <div class="vtimeline-step__center">
+            <div class="vtimeline-step__line" aria-hidden="true"></div>
+            <div class="vtimeline-step__cross" aria-hidden="true"></div>
+            <div class="vtimeline-step__axisTick" aria-hidden="true"></div>
+            <div class="vtimeline-step__axisYear" aria-hidden="true">{{ axisYear }}</div>
+
+            <button class="vtimeline-step__icon" type="button" aria-label="{{ event.title }}">
+              <img src="{{ event.image }}" alt="{{ event.title }}" class="vtimeline-step__image" loading="lazy" />
+            </button>
+            {% if event.isFeatured and event.featuredLabel %}
+            <div class="vtimeline-step__badge">{{ event.featuredLabel }}</div>
+            {% endif %}
+          </div>
+
+          <aside class="vtimeline-step__info" data-info hidden>
+            <div class="infoBox">
+              <div class="infoBox__head">
+                <span class="infoBox__meta">{{ event.era }}</span>
+              </div>
+              <h2 class="infoBox__title">{% if event.id == "t-10000bc" %}Prsti, kamenčići i urezi{% else %}{{ event.title }}{% endif %}</h2>
+              <p>{{ event.detail }}</p>
+              {% if event.isFeatured %}
+              <p><a class="infoBox__cta" href="/hr/digitron-i-buje/i-bi-digitron/">Procitaj više o Digitronu</a></p>
+              {% endif %}
+            </div>
+          </aside>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+  </section>
+</main>
+
+
