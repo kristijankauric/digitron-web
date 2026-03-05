@@ -44,7 +44,10 @@ useTimelineStyles: true
             {% for segment in vremeplov_hr.config.segments %}
             <div class="topline__segment seg seg--{{ segment.key }}" data-seg="{{ segment.key }}" style="--seg-ratio: {{ segment.widthRatio }};">
               <div class="seg__head">
-                <span class="seg__title">{{ segment.label }}</span>
+                <span class="seg__title">
+                  <span class="seg__title-main">{{ segment.label | replace(" računanje", "") }}</span>
+                  <span class="seg__title-sub">računanje</span>
+                </span>
                 <span class="seg__range">{{ segment.rangeLabel }}</span>
               </div>
 
@@ -117,5 +120,4 @@ useTimelineStyles: true
     </div>
   </section>
 </main>
-
 
