@@ -50,7 +50,7 @@ module.exports = function (eleventyConfig) {
       let transformed = content;
 
       transformed = transformed.replace(
-        /(href|src|poster|data-src)\s*=\s*(['"])(\/(?!\/)[^'"]*)\2/gi,
+        /(href|src|poster|data-src|data-lb-image)\s*=\s*(['"])(\/(?!\/)[^'"]*)\2/gi,
         (_, attr, quote, value) => `${attr}=${quote}${prefixRootPath(value, pathPrefix)}${quote}`
       );
 
