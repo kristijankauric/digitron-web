@@ -670,6 +670,10 @@
     });
 
     var wheelLocked = false;
+    function shouldUseStepSnapNavigation() {
+      return window.matchMedia("(min-width: 901px)").matches;
+    }
+
     function getActiveIndex() {
       var idx = steps.findIndex(function (step) {
         return step.classList.contains("is-active");
@@ -692,6 +696,9 @@
     }
 
     window.addEventListener("wheel", function (event) {
+      if (!shouldUseStepSnapNavigation()) {
+        return;
+      }
       if (wheelLocked) {
         event.preventDefault();
         return;
@@ -742,6 +749,11 @@
     }, { passive: true });
 
     window.addEventListener("touchend", function (event) {
+      if (!shouldUseStepSnapNavigation()) {
+        touchStartX = null;
+        touchStartY = null;
+        return;
+      }
       if (wheelLocked || touchStartY === null || touchStartX === null || !event.changedTouches || event.changedTouches.length !== 1) {
         touchStartX = null;
         touchStartY = null;

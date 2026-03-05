@@ -677,7 +677,8 @@ body.no-scroll {
   }
 
   .vtimeline-step {
-    min-height: 80vh;
+    min-height: 92vh;
+    padding: 18px 0 22px;
   }
 
   .vtimeline-step__inner {
@@ -690,6 +691,10 @@ body.no-scroll {
     grid-column: 1;
   }
 
+  .vtimeline-step__center {
+    padding-top: 34px;
+  }
+
   .vtimeline-step__line {
     top: -24vh;
     bottom: -24vh;
@@ -700,28 +705,42 @@ body.no-scroll {
   }
 
   .vtimeline-step__icon {
-    width: 240px;
-    height: 240px;
-    margin-top: 10px;
+    width: 194px;
+    height: 194px;
+    margin-top: 12px;
+    margin-bottom: 0;
   }
 
   .vtimeline-step__cross {
-    width: 90px;
+    width: 74px;
   }
 
   .vtimeline-step__axisYear {
-    top: 50%;
-    left: calc(50% - 190px);
-    transform: translate(-100%, -50%);
-    font-size: 24px;
-    width: 124px;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, 0);
+    font-size: 22px;
+    width: min(86vw, 260px);
+    text-align: center;
+    z-index: 2;
+  }
+
+  .vtimeline-step__info {
+    justify-self: center;
+    align-self: start;
+    margin-top: -22px;
+    position: relative;
+    z-index: 5;
   }
 
   .infoBox {
-    width: 340px;
+    width: min(92vw, 340px);
+    background: rgba(255, 255, 255, 0.94);
+    max-height: 42vh;
+    overflow: auto;
   }
 
   .infoBox__title {
-    font-size: 30px;
+    font-size: 27px;
   }
 }
