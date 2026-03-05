@@ -13,14 +13,21 @@
       "label": "Rani računski alati",
       "labelMain": "Rani računski",
       "labelSub": "alati",
-      "rangeLabel": "oko 35 000. pr. n. e. – 1622."
+      "rangeLabel": "oko 35 000. pr. n. e. – oko 2500. pr. n. e."
+    },
+    {
+      "key": "algorithmic",
+      "label": "Algoritmi i algebra",
+      "labelMain": "Algoritmi",
+      "labelSub": "i algebra",
+      "rangeLabel": "9. stoljeće"
     },
     {
       "key": "mechanical",
       "label": "Mehanički računski strojevi",
       "labelMain": "Mehanički računski",
       "labelSub": "strojevi",
-      "rangeLabel": "9. stoljeće – kraj 19. stoljeća"
+      "rangeLabel": "1614. – kraj 19. stoljeća"
     },
     {
       "key": "digital",
@@ -77,7 +84,7 @@
       "yearLabel": "9. stoljeće",
       "title": "Al-Khwarizmi (Perzija) – algoritmi i algebra",
       "subtitle": "Sustavni postupci računanja",
-      "era": "Mehanički računski strojevi",
+      "era": "Algoritmi i algebra",
       "tooltip": "Rani temelji algoritamskog razmišljanja.",
       "detail": "U Bagdadu, jednom od tadašnjih znanstvenih centara, Al-Khwarizmi opisuje sustavne postupke računanja i rješavanja problema – ono što danas zovemo algoritmima. Njegova algebra pomaže računati sa simbolima, a ne samo s konkretnim brojevima. Odatle dolazi i riječ “algoritam”.",
       "image": "/assets/images/final/extra/FOTKE ZA VREMEPLOV/Al-Khwarizmi.jpg"

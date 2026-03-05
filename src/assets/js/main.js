@@ -528,6 +528,9 @@
       lightbox.setAttribute("hidden", "");
       lightbox.setAttribute("aria-hidden", "true");
       document.body.classList.remove("no-scroll");
+      if (lightboxImage) {
+        lightboxImage.setAttribute("src", "");
+      }
       lightbox.style.removeProperty("--lb-panel-h");
       lightboxOpen = false;
     }
@@ -604,33 +607,53 @@
       });
     }
 
-    markers.forEach(function (mk) {
-      mk.addEventListener("click", function () {
-        var id = mk.getAttribute("data-target");
-        if (!id) {
-          return;
-        }
-
-        history.replaceState(null, "", "#" + id);
-        scrollToStep(id);
-        setActiveStep(id);
-        setActiveMarker(id);
-        scheduleToplineConnectorsLayout();
-      });
-    });
-
-    steps.forEach(function (step) {
-      var iconBtn = step.querySelector(".vtimeline-step__icon");
-      if (!iconBtn) {
+    function activateStepById(id, shouldScroll) {
+      if (!id) {
         return;
       }
-      iconBtn.addEventListener("click", function (event) {
+      var targetStep = document.getElementById(id);
+      if (!targetStep) {
+        return;
+      }
+
+      closeStepLightbox();
+      history.replaceState(null, "", "#" + id);
+      if (shouldScroll) {
+        scrollToStep(id, "auto");
+      }
+      setActiveStep(id);
+      setActiveMarker(id);
+      scheduleToplineConnectorsLayout();
+    }
+
+    page.addEventListener("click", function (event) {
+      var mk = event.target.closest(".mk[data-target]");
+      if (mk) {
         event.preventDefault();
-        openStepLightbox(step, iconBtn);
-      });
+        event.stopPropagation();
+        activateStepById(mk.getAttribute("data-target"), true);
+        return;
+      }
+
+      var iconBtn = event.target.closest(".vtimeline-step__icon");
+      if (iconBtn) {
+        event.preventDefault();
+        var parentStep = iconBtn.closest(".vtimeline-step[data-id]");
+        if (parentStep) {
+          var stepId = parentStep.getAttribute("data-id");
+          activateStepById(stepId, false);
+          openStepLightbox(parentStep, iconBtn);
+        }
+      }
     });
 
     if (lightbox) {
+      var lightboxPanel = lightbox.querySelector("[data-vremeplov-lightbox-panel]");
+      if (lightboxPanel) {
+        lightboxPanel.addEventListener("click", function (event) {
+          event.stopPropagation();
+        });
+      }
       lightbox.addEventListener("click", function () {
         closeStepLightbox();
       });
@@ -643,6 +666,14 @@
         updateLightboxLayoutVars();
       }, { passive: true });
     }
+
+    window.addEventListener("hashchange", function () {
+      var id = (window.location.hash || "").replace("#", "");
+      if (!id) {
+        return;
+      }
+      activateStepById(id, false);
+    });
 
     var observer = new IntersectionObserver(function (entries) {
       var visible = entries

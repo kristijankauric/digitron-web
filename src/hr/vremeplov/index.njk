@@ -44,6 +44,7 @@ useTimelineStyles: true
             <div class="topline__track" role="navigation" aria-label="{{ timeline.ui.trackAria }}">
             {% for segment in timeline.config.segments %}
             <div class="topline__segment seg seg--{{ segment.key }}" data-seg="{{ segment.key }}" style="--seg-ratio: {{ segment.widthRatio }};">
+              {% if segment.key != 'algorithmic' %}
               <div class="seg__head">
                 <span class="seg__title">
                   <span class="seg__title-main">{{ segment.labelMain or segment.label }}</span>
@@ -51,15 +52,23 @@ useTimelineStyles: true
                 </span>
                 <span class="seg__range">{{ segment.rangeLabel }}</span>
               </div>
+              {% else %}
+              <div class="seg__head seg__head--ghost" aria-hidden="true"></div>
+              {% endif %}
 
               <div class="seg__line">
                 {% for event in timeline.events %}
                 {% if event.segment == segment.key %}
+                {% if segment.key == 'algorithmic' %}
+                {% set left = 50 %}
+                {% else %}
                 {% set left = ((event.yearSort - segment.fromYear) / (segment.toYear - segment.fromYear)) * 100 %}
+                {% endif %}
                 {% set markerLabel = event.toplineLabelHtml or event.yearLabel %}
                 {% set isMechanicalStart = segment.key == 'mechanical' and event.yearSort == segment.fromYear %}
+                {% set isStandaloneYear = segment.key == 'algorithmic' %}
                 {% set isLeftAlignedLabel = (segment.key == 'mechanical' and event.id == 't-1673') or event.id == 't-2019-quantum' %}
-                <button class="mk{% if event.isFeatured %} mk--featured{% else %} mk--global{% endif %}{% if isMechanicalStart %} mk--vertical-label{% endif %}{% if isLeftAlignedLabel %} mk--label-from-dot{% endif %}" type="button" data-target="{{ event.id }}" aria-label="{{ event.yearLabel }} - {{ event.title }}" style="left: {{ left }}%;">
+                <button class="mk{% if event.isFeatured %} mk--featured{% else %} mk--global{% endif %}{% if isMechanicalStart %} mk--vertical-label{% endif %}{% if isStandaloneYear %} mk--standalone-year{% endif %}{% if isLeftAlignedLabel %} mk--label-from-dot{% endif %}" type="button" data-target="{{ event.id }}" aria-label="{{ event.yearLabel }} - {{ event.title }}" style="left: {{ left }}%;">
                   <span class="mk__dot" aria-hidden="true"></span>
                   <span class="mk__label">{{ markerLabel | safe }}</span>
                 </button>

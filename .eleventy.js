@@ -36,7 +36,10 @@ function prefixSrcsetValue(srcsetValue, pathPrefix) {
 }
 
 module.exports = function (eleventyConfig) {
-  const pathPrefix = normalizePathPrefix(process.env.ELEVENTY_PATH_PREFIX);
+  const isServeMode = process.argv.includes("--serve");
+  const pathPrefix = isServeMode
+    ? "/"
+    : normalizePathPrefix(process.env.ELEVENTY_PATH_PREFIX);
 
   eleventyConfig.addPassthroughCopy("src/assets");
   eleventyConfig.addPassthroughCopy({ "src/hr": "hr" });
