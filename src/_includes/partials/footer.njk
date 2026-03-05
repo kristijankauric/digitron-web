@@ -11,6 +11,20 @@
                 <div class="margin-bottom margin-medium">
                   <a href="{{ t.home_href | default('/hr/') }}" class="footer3_logo-link w-nav-brand"><img src="/assets/images/final/extra/FOTKE%20ZA%20VREMEPLOV/logo%20novi%20Digitron.Buje%20informati%C4%8Dka%20pri%C4%8Da%20copy%206.png" loading="lazy" alt="{{ t.logo_alt | default('digitron.buje logo') }}" class="logo-footer"/></a>
                 </div>
+                <div class="margin-bottom margin-small footer-media">
+                  <video
+                    class="footer-media__video"
+                    data-footer-loop-video
+                    muted
+                    playsinline
+                    loop
+                    preload="metadata"
+                    poster="/assets/images/final/extra/video%20slikice/footer%20buje%20slika.jpg"
+                    aria-label="Digitron Buje video"
+                  >
+                    <source src="/assets/images/final/extra/video%20slikice/footer%20buje.mp4" type="video/mp4" />
+                  </video>
+                </div>
                 <div class="margin-bottom margin-small">
                   <div class="footer3_details-wrapper">
                     <div class="margin-bottom margin-xxsmall"><div class="text-ime-galerije">{{ t.footer_brand_name | default("digitron.buje") }}</div></div>

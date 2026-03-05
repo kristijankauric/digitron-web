@@ -1,0 +1,66 @@
+{
+  "ui": {
+    "pageTitle": "Cronologia",
+    "toplineAria": "Panoramica della linea del tempo",
+    "trackAria": "Navigazione temporale",
+    "vtimelineAria": "Cronologia storica",
+    "scaleStartLabel": "10 000 a.C.",
+    "scaleEndLabel": "oggi"
+  },
+  "segments": [
+    {
+      "key": "premechanical",
+      "label": "Calcolo premeccanico",
+      "labelMain": "Premeccanico",
+      "labelSub": "calcolo",
+      "rangeLabel": "ca. 10 000 a.C. - 1642."
+    },
+    {
+      "key": "mechanical",
+      "label": "Calcolo meccanico",
+      "labelMain": "Meccanico",
+      "labelSub": "calcolo",
+      "rangeLabel": "1642. - 1935."
+    },
+    {
+      "key": "electro",
+      "label": "Calcolo elettromeccanico",
+      "labelMain": "Elettromeccanico",
+      "labelSub": "calcolo",
+      "rangeLabel": "1935. - 1957."
+    },
+    {
+      "key": "digital",
+      "label": "Calcolo digitale",
+      "labelMain": "Digitale",
+      "labelSub": "calcolo",
+      "rangeLabel": "1957. - 1992."
+    },
+    {
+      "key": "quantum",
+      "label": "Calcolo quantistico",
+      "labelMain": "Quantistico",
+      "labelSub": "calcolo",
+      "rangeLabel": "2019. - oggi"
+    }
+  ],
+  "events": [
+    {
+      "id": "t-35000bc",
+      "yearLabel": "ca. 35 000 a.C.",
+      "toplineLabelHtml": "ca. 35 000<br>a.C.",
+      "axisLabelHtml": "<span class=\"axisYear__line axisYear__line--nowrap\">ca. 35 000</span><span class=\"axisYear__line\">a.C.</span>"
+    },
+    {
+      "id": "t-2500bc",
+      "yearLabel": "ca. 2 500 a.C.",
+      "toplineLabelHtml": "ca. 2 500<br>a.C.",
+      "axisLabelHtml": "<span class=\"axisYear__line axisYear__line--nowrap\">ca. 2 500</span><span class=\"axisYear__line\">a.C.</span>"
+    },
+    {
+      "id": "t-1971-digitron",
+      "ctaHref": "/it/",
+      "ctaLabel": "Leggi di piu su Digitron"
+    }
+  ]
+}

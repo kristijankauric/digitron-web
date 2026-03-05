@@ -1,0 +1,66 @@
+{
+  "ui": {
+    "pageTitle": "Timeline",
+    "toplineAria": "Timeline overview",
+    "trackAria": "Time navigation",
+    "vtimelineAria": "Historical timeline",
+    "scaleStartLabel": "10 000 BCE",
+    "scaleEndLabel": "present"
+  },
+  "segments": [
+    {
+      "key": "premechanical",
+      "label": "Pre-mechanical computing",
+      "labelMain": "Pre-mechanical",
+      "labelSub": "computing",
+      "rangeLabel": "c. 10 000 BCE - 1642."
+    },
+    {
+      "key": "mechanical",
+      "label": "Mechanical computing",
+      "labelMain": "Mechanical",
+      "labelSub": "computing",
+      "rangeLabel": "1642. - 1935."
+    },
+    {
+      "key": "electro",
+      "label": "Electromechanical computing",
+      "labelMain": "Electromechanical",
+      "labelSub": "computing",
+      "rangeLabel": "1935. - 1957."
+    },
+    {
+      "key": "digital",
+      "label": "Digital computing",
+      "labelMain": "Digital",
+      "labelSub": "computing",
+      "rangeLabel": "1957. - 1992."
+    },
+    {
+      "key": "quantum",
+      "label": "Quantum computing",
+      "labelMain": "Quantum",
+      "labelSub": "computing",
+      "rangeLabel": "2019. - present"
+    }
+  ],
+  "events": [
+    {
+      "id": "t-35000bc",
+      "yearLabel": "c. 35 000 BCE",
+      "toplineLabelHtml": "c. 35 000<br>BCE",
+      "axisLabelHtml": "<span class=\"axisYear__line axisYear__line--nowrap\">c. 35 000</span><span class=\"axisYear__line\">BCE</span>"
+    },
+    {
+      "id": "t-2500bc",
+      "yearLabel": "c. 2 500 BCE",
+      "toplineLabelHtml": "c. 2 500<br>BCE",
+      "axisLabelHtml": "<span class=\"axisYear__line axisYear__line--nowrap\">c. 2 500</span><span class=\"axisYear__line\">BCE</span>"
+    },
+    {
+      "id": "t-1971-digitron",
+      "ctaHref": "/en/",
+      "ctaLabel": "Read more about Digitron"
+    }
+  ]
+}
