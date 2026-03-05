@@ -595,7 +595,7 @@
 .vremeplov-lightbox {
   --lb-gap: 12px;
   --lb-panel-h: 160px;
-  position: fixed;
+  position: fixed !important;
   inset: 0;
   z-index: 6000;
   background: rgba(8, 8, 8, 0.9);

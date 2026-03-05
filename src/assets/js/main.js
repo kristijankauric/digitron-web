@@ -154,6 +154,10 @@
     var lightboxDetail = lightbox ? lightbox.querySelector("[data-vremeplov-lightbox-detail]") : null;
     var lightboxOpen = false;
 
+    if (lightbox && lightbox.parentElement !== document.body) {
+      document.body.appendChild(lightbox);
+    }
+
     var lastToplineHeight = 120;
 
     function syncToplineOffset() {
