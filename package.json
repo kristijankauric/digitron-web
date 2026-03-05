@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "npx @11ty/eleventy --serve",
     "dev:lan": "npx @11ty/eleventy --serve --host 0.0.0.0 --port 8080",
-    "build": "npx @11ty/eleventy"
+    "build": "npx @11ty/eleventy && node tools/verify-and-sync-assets.js"
   },
   "devDependencies": {
     "@11ty/eleventy": "^3.0.0"

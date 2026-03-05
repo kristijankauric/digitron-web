@@ -18,6 +18,8 @@ Static multilingual site built with Eleventy.
 2. Start dev server: `npm run dev`
 3. Production build: `npm run build`
 
+Build includes an asset guard step that verifies and repairs `dist/assets` from `src/assets` if passthrough copy is incomplete.
+
 ## Output Policy (`dist`)
 - `dist/` is generated output.
 - `dist/` should not be edited manually.
