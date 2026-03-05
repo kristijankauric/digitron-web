@@ -1,7 +1,16 @@
-﻿{
-  "home": { "href": "/hr/", "label": "Početna stranica" },
-  "vremeplov": { "href": "/hr/vremeplov/", "label": "Vremeplov" },
-  "contact": { "href": "/impressum", "label": "Kontakt" },
+{
+  "home": {
+    "href": "/hr/",
+    "label": "Početna stranica"
+  },
+  "vremeplov": {
+    "href": "/hr/vremeplov/",
+    "label": "Vremeplov"
+  },
+  "contact": {
+    "href": "/impressum",
+    "label": "Kontakt"
+  },
   "sections": [
     {
       "title": "Vremeplov",
@@ -10,37 +19,415 @@
     {
       "title": "Razvoj strojeva za računanje",
       "items": [
-        { "href": "/hr/razvoj-strojeva-za-racunanje/anticki-i-mehanicki-kalkulatori/", "label": "Antički i mehanički kalkulatori" },
-        { "href": "/hr/razvoj-strojeva-za-racunanje/elektromehanicki-kalkulatori/", "label": "Elektromehanički kalkulatori" },
-        { "href": "/hr/razvoj-strojeva-za-racunanje/digitalni-kalkulatori/", "label": "Digitalni kalkulatori" }
+        {
+          "href": "/hr/razvoj-strojeva-za-racunanje/anticki-i-mehanicki-kalkulatori/",
+          "label": "Antički i mehanički kalkulatori"
+        },
+        {
+          "href": "/hr/razvoj-strojeva-za-racunanje/elektromehanicki-kalkulatori/",
+          "label": "Elektromehanički kalkulatori"
+        },
+        {
+          "href": "/hr/razvoj-strojeva-za-racunanje/digitalni-kalkulatori/",
+          "label": "Digitalni kalkulatori"
+        }
       ]
     },
     {
       "title": "Digitron i Buje",
       "items": [
-        { "href": "/hr/digitron-i-buje/i-bi-digitron/", "label": "I bi Digitron" },
-        { "href": "/hr/digitron-i-buje/na-tehnoloskom-tronu/", "label": "Na tehnološkom tronu" },
-        { "href": "/hr/digitron-i-buje/bujanje-buja/", "label": "Bujanje Buja" },
-        { "href": "/hr/digitron-i-buje/kultura-i-sport/", "label": "Kultura i sport" }
+        {
+          "href": "/hr/digitron-i-buje/i-bi-digitron/",
+          "label": "I bi Digitron"
+        },
+        {
+          "href": "/hr/digitron-i-buje/na-tehnoloskom-tronu/",
+          "label": "Na tehnološkom tronu"
+        },
+        {
+          "href": "/hr/digitron-i-buje/bujanje-buja/",
+          "label": "Bujanje Buja"
+        },
+        {
+          "href": "/hr/digitron-i-buje/kultura-i-sport/",
+          "label": "Kultura i sport"
+        }
       ]
     },
     {
       "title": "Svijet kalkulatora",
       "items": [
-        { "href": "/hr/razni-kalkulatori-i-njihove-price/kalkuliranje-po-naski/", "label": "Kalkuliranje po naški" },
-        { "href": "/hr/razni-kalkulatori-i-njihove-price/svjetski-igraci/", "label": "Svjetski igrači" },
-        { "href": "/hr/razni-kalkulatori-i-njihove-price/hladnoratovske-kalkulacije/", "label": "Hladnoratovske kalkulacije" },
-        { "href": "/hr/razni-kalkulatori-i-njihove-price/neobicne-namjene/", "label": "Neobične namjene" },
-        { "href": "/hr/razni-kalkulatori-i-njihove-price/povratak-u-buducnost/", "label": "Povratak u budućnost" }
+        {
+          "href": "/hr/razni-kalkulatori-i-njihove-price/kalkuliranje-po-naski/",
+          "label": "Kalkuliranje po naški"
+        },
+        {
+          "href": "/hr/razni-kalkulatori-i-njihove-price/svjetski-igraci/",
+          "label": "Svjetski igrači"
+        },
+        {
+          "href": "/hr/razni-kalkulatori-i-njihove-price/hladnoratovske-kalkulacije/",
+          "label": "Hladnoratovske kalkulacije"
+        },
+        {
+          "href": "/hr/razni-kalkulatori-i-njihove-price/neobicne-namjene/",
+          "label": "Neobične namjene"
+        },
+        {
+          "href": "/hr/razni-kalkulatori-i-njihove-price/povratak-u-buducnost/",
+          "label": "Povratak u budućnost"
+        }
       ]
     }
   ],
   "languages": [
-    { "code": "HR", "label": "Hrvatski", "href": "#" },
-    { "code": "IT", "label": "Italiano", "href": "/it/" },
-    { "code": "EN", "label": "English", "href": "/en/" }
-  ]
+    {
+      "code": "HR",
+      "label": "Hrvatski",
+      "href": "#"
+    },
+    {
+      "code": "IT",
+      "label": "Italiano",
+      "href": "/it/"
+    },
+    {
+      "code": "EN",
+      "label": "English",
+      "href": "/en/"
+    }
+  ],
+  "timeline": {
+    "config": {
+      "stickyOverview": true,
+      "presentYear": 2026,
+      "segments": [
+        {
+          "key": "premechanical",
+          "fromYear": -35000,
+          "toYear": 1622,
+          "widthRatio": 1,
+          "label": "Rani računski alati",
+          "labelMain": "Rani računski",
+          "labelSub": "alati",
+          "rangeLabel": "oko 35 000. pr. n. e. – 1622."
+        },
+        {
+          "key": "mechanical",
+          "fromYear": 850,
+          "toYear": 1899,
+          "widthRatio": 1,
+          "label": "Mehanički računski strojevi",
+          "labelMain": "Mehanički računski",
+          "labelSub": "strojevi",
+          "rangeLabel": "9. stoljeće – kraj 19. stoljeća"
+        },
+        {
+          "key": "digital",
+          "fromYear": 1930,
+          "toYear": 1971.1,
+          "widthRatio": 1,
+          "label": "Električni i elektronički kalkulatori",
+          "labelMain": "Električni i elektronički",
+          "labelSub": "kalkulatori",
+          "rangeLabel": "1930-e – 1971."
+        },
+        {
+          "key": "quantum",
+          "fromYear": 2007,
+          "toYear": 2026,
+          "widthRatio": 1,
+          "label": "Integrirani digitalni uređaji",
+          "labelMain": "Integrirani digitalni",
+          "labelSub": "uređaji",
+          "rangeLabel": "2007. – danas"
+        }
+      ]
+    },
+    "segments": [
+      {
+        "key": "premechanical",
+        "fromYear": -35000,
+        "toYear": 1622,
+        "widthRatio": 1,
+        "label": "Rani računski alati",
+        "labelMain": "Rani računski",
+        "labelSub": "alati",
+        "rangeLabel": "oko 35 000. pr. n. e. – 1622."
+      },
+      {
+        "key": "mechanical",
+        "fromYear": 850,
+        "toYear": 1899,
+        "widthRatio": 1,
+        "label": "Mehanički računski strojevi",
+        "labelMain": "Mehanički računski",
+        "labelSub": "strojevi",
+        "rangeLabel": "9. stoljeće – kraj 19. stoljeća"
+      },
+      {
+        "key": "digital",
+        "fromYear": 1930,
+        "toYear": 1971.1,
+        "widthRatio": 1,
+        "label": "Električni i elektronički kalkulatori",
+        "labelMain": "Električni i elektronički",
+        "labelSub": "kalkulatori",
+        "rangeLabel": "1930-e – 1971."
+      },
+      {
+        "key": "quantum",
+        "fromYear": 2007,
+        "toYear": 2026,
+        "widthRatio": 1,
+        "label": "Integrirani digitalni uređaji",
+        "labelMain": "Integrirani digitalni",
+        "labelSub": "uređaji",
+        "rangeLabel": "2007. – danas"
+      }
+    ],
+    "events": [
+      {
+        "id": "t-35000bc",
+        "yearSort": -35000,
+        "segment": "premechanical",
+        "image": "/assets/images/final/extra/FOTKE ZA VREMEPLOV/Lebombo.jpg",
+        "gap": "md",
+        "isFeatured": false,
+        "yearLabel": "oko 35 000. pr. n. e.",
+        "toplineLabelHtml": "oko 35 000.<br>pr. n. e.",
+        "axisLabelHtml": "<span class=\"axisYear__line axisYear__line--nowrap\">oko 35 000.</span><span class=\"axisYear__line\">pr. n. e.</span>",
+        "title": "Lebombo kost – najstariji trag bilježenja količina",
+        "subtitle": "Najstariji trag bilježenja količina",
+        "era": "Rani računski alati",
+        "tooltip": "Najstariji dokaz namjernog bilježenja količine.",
+        "detail": "U južnoj Africi pronađena je kost pavijana s 29 urezanih crtica, stara oko 35 000 godina. Ne znamo što je točno brojila, ali vidimo da je netko namjerno bilježio količinu. To je jedan od najstarijih dokaza da ljudi “spremaju broj” izvan svoje glave."
+      },
+      {
+        "id": "t-3000bc-meso",
+        "yearSort": -3000,
+        "segment": "premechanical",
+        "image": "/assets/images/final/extra/FOTKE ZA VREMEPLOV/Mezopotamija.jpg",
+        "gap": "md",
+        "isFeatured": false,
+        "yearLabel": "oko 3000. pr. n. e.",
+        "toplineLabelHtml": "oko 3000.<br>pr. n. e.",
+        "axisLabelHtml": "<span class=\"axisYear__line axisYear__line--nowrap\">oko 3000.</span><span class=\"axisYear__line\">pr. n. e.</span>",
+        "title": "Mezopotamija – prvi zapis brojeva",
+        "subtitle": "Brojevi na glinenim pločicama",
+        "era": "Rani računski alati",
+        "tooltip": "Prvi zapis brojeva simbolima.",
+        "detail": "U Mezopotamiji (današnji Irak) ljudi počinju zapisivati brojeve simbolima na glinenim pločicama. To omogućuje vođenje računa o robi, porezima i zalihama bez oslanjanja na pamćenje. Kad brojevi dobiju zapis, računanje postaje ponovljivo i “provjerljivo”."
+      },
+      {
+        "id": "t-2500bc",
+        "yearSort": -2500,
+        "segment": "premechanical",
+        "image": "/assets/images/final/extra/FOTKE ZA VREMEPLOV/1-NMAH-AHB2017q001373.jpg",
+        "gap": "lg",
+        "isFeatured": false,
+        "yearLabel": "oko 2500. pr. n. e.",
+        "toplineLabelHtml": "oko 2500.<br>pr. n. e.",
+        "axisLabelHtml": "<span class=\"axisYear__line axisYear__line--nowrap\">oko 2500.</span><span class=\"axisYear__line\">pr. n. e.</span>",
+        "title": "Abakus – prvi sustavni računski alat",
+        "subtitle": "Sustavno računanje kuglicama",
+        "era": "Rani računski alati",
+        "tooltip": "Abakus ubrzava i uređuje računanje.",
+        "detail": "Abakus se pojavljuje u Mezopotamiji, a kasnije se razvija u Kini (suanpan) i Japanu (soroban). Kuglice na šipkama predstavljaju vrijednosti pa je računanje brže i urednije nego s kamenčićima. S njim se stoljećima računalo u trgovini i administraciji."
+      },
+      {
+        "id": "t-850-alkh",
+        "yearSort": 850,
+        "segment": "mechanical",
+        "image": "/assets/images/final/extra/FOTKE ZA VREMEPLOV/Al-Khwarizmi.jpg",
+        "gap": "md",
+        "isFeatured": false,
+        "yearLabel": "9. stoljeće",
+        "title": "Al-Khwarizmi (Perzija) – algoritmi i algebra",
+        "subtitle": "Sustavni postupci računanja",
+        "era": "Mehanički računski strojevi",
+        "tooltip": "Rani temelji algoritamskog razmišljanja.",
+        "detail": "U Bagdadu, jednom od tadašnjih znanstvenih centara, Al-Khwarizmi opisuje sustavne postupke računanja i rješavanja problema – ono što danas zovemo algoritmima. Njegova algebra pomaže računati sa simbolima, a ne samo s konkretnim brojevima. Odatle dolazi i riječ “algoritam”."
+      },
+      {
+        "id": "t-1614-1622",
+        "yearSort": 1618,
+        "segment": "mechanical",
+        "image": "/assets/images/final/extra/FOTKE ZA VREMEPLOV/2-NMAH-DOR2010-0515.jpg",
+        "gap": "md",
+        "isFeatured": false,
+        "yearLabel": "1614. – 1622.",
+        "title": "Logaritmi i logaritamsko računalo – prvi “inženjerski” računski alat",
+        "subtitle": "Prijelaz prema inženjerskom računanju",
+        "era": "Mehanički računski strojevi",
+        "tooltip": "Logaritmi i slide rule kao glavni alat inženjera.",
+        "detail": "U Škotskoj John Napier uvodi logaritme (1614.), a ubrzo se pojavljuje logaritamsko računalo – slide rule (1622.). Ono pretvara teško množenje i dijeljenje u pomicanje skala i brzo očitavanje rezultata. Stoljećima je to bio glavni alat inženjera i znanstvenika, sve do elektroničkih kalkulatora."
+      },
+      {
+        "id": "t-1642",
+        "yearSort": 1642,
+        "segment": "mechanical",
+        "image": "/assets/images/final/extra/FOTKE ZA VREMEPLOV/Arts_et_Metiers_Pascaline_dsc03869.jpg",
+        "gap": "md",
+        "isFeatured": false,
+        "yearLabel": "1642.",
+        "title": "Pascalina – prvi mehanički kalkulator",
+        "subtitle": "Računanje prelazi na mehanizam",
+        "era": "Mehanički računski strojevi",
+        "tooltip": "Prvi uspješni mehanički kalkulator.",
+        "detail": "Francuski matematičar Blaise Pascal gradi stroj sa zupčanicima koji automatski zbraja i oduzima. Ideja je jednostavna: okreneš kotačić, a stroj “sam” prenosi znamenke. To je veliki korak jer dio računanja prelazi s čovjeka na mehanizam."
+      },
+      {
+        "id": "t-1673",
+        "yearSort": 1673,
+        "segment": "mechanical",
+        "image": "/assets/images/final/extra/FOTKE ZA VREMEPLOV/4-Christoph_Bernhard_Francke_-_Bildnis_des_Philosophen_Leibniz_(ca._1695).jpg",
+        "gap": "md",
+        "isFeatured": false,
+        "yearLabel": "1673.",
+        "title": "Leibnizov računski stroj – sve 4 operacije",
+        "subtitle": "Mehaničko računanje postaje svestrano",
+        "era": "Mehanički računski strojevi",
+        "tooltip": "Množenje i dijeljenje ulaze u mehaničke strojeve.",
+        "detail": "U Njemačkoj Leibniz unapređuje mehaničko računanje i omogućuje množenje i dijeljenje, uz zbrajanje i oduzimanje. Njegov “stepeni zupčanik” postaje standard u mehaničkim kalkulatorima sljedećih 200 godina. Strojevi postaju precizniji i svestraniji."
+      },
+      {
+        "id": "t-1822",
+        "yearSort": 1822,
+        "segment": "mechanical",
+        "image": "/assets/images/final/extra/FOTKE ZA VREMEPLOV/Babbageov Difference Engine.jpg",
+        "gap": "md",
+        "isFeatured": false,
+        "yearLabel": "1822.",
+        "title": "Babbageov Difference Engine – stroj koji računa tablice",
+        "subtitle": "Korak prema programabilnosti",
+        "era": "Mehanički računski strojevi",
+        "tooltip": "Automatski izračun tablica bez ljudske pogreške.",
+        "detail": "U Engleskoj Charles Babbage započinje stroj koji bi automatski izračunavao matematičke tablice bez ljudske pogreške. Iako nije dovršen u njegovo vrijeme, ideja je revolucionarna: stroj slijedi unaprijed zadane korake. To je važan korak prema programabilnim strojevima."
+      },
+      {
+        "id": "t-1899",
+        "yearSort": 1899,
+        "segment": "mechanical",
+        "image": "/assets/images/final/extra/FOTKE ZA VREMEPLOV/Industrijska proizvodnja mehani?kih kalkulatora.jpg",
+        "gap": "md",
+        "isFeatured": false,
+        "yearLabel": "kraj 19. stoljeća",
+        "title": "Industrijska proizvodnja mehaničkih kalkulatora",
+        "subtitle": "Računanje ulazi u urede i tvornice",
+        "era": "Mehanički računski strojevi",
+        "tooltip": "Masovna upotreba računskih strojeva.",
+        "detail": "Mehanički kalkulatori postaju masovni proizvodi i ulaze u banke, urede i tvornice (posebno u Europi i SAD-u). Računanje postaje dio svakodnevnog poslovanja, a ne rijedak znanstveni alat. Ovo je “birokratska” faza računskih strojeva."
+      },
+      {
+        "id": "t-1930s",
+        "yearSort": 1930,
+        "segment": "digital",
+        "image": "/assets/images/final/extra/FOTKE ZA VREMEPLOV/5-Zuse_Patent_907948.jpg",
+        "gap": "md",
+        "isFeatured": false,
+        "yearLabel": "1930-e",
+        "title": "Elektromehanički kalkulatori – struja pokreće mehaniku",
+        "subtitle": "Prijelaz iz mehanike u elektroniku",
+        "era": "Električni i elektronički kalkulatori",
+        "tooltip": "Motor ubrzava mehaničke kalkulatore.",
+        "detail": "Kalkulatori dobivaju električne motore pa više ne ovise o ručnom okretanju. Mehanizam i dalje računa zupčanicima, ali je brži i pouzdaniji. To je prijelazna faza između čiste mehanike i prave elektronike."
+      },
+      {
+        "id": "t-1961",
+        "yearSort": 1961,
+        "segment": "digital",
+        "image": "/assets/images/final/extra/FOTKE ZA VREMEPLOV/8-608.jpg",
+        "gap": "md",
+        "isFeatured": false,
+        "yearLabel": "1961.",
+        "title": "ANITA (UK) – prvi potpuno elektronički kalkulator",
+        "subtitle": "Kraj mehaničke ere",
+        "era": "Električni i elektronički kalkulatori",
+        "tooltip": "Prvi potpuno elektronički kalkulator.",
+        "detail": "U Ujedinjenom Kraljevstvu nastaje ANITA, stolni kalkulator koji računanje izvodi elektroničkim komponentama, bez mehaničkih zupčanika. Time se zatvara duga mehanička era. Elektronika donosi brzinu i manje trošenje dijelova."
+      },
+      {
+        "id": "t-1960s-ic",
+        "yearSort": 1960,
+        "segment": "digital",
+        "image": "/assets/images/final/extra/FOTKE ZA VREMEPLOV/10-NMAH-77-7857.jpg",
+        "gap": "md",
+        "isFeatured": false,
+        "yearLabel": "1960-e",
+        "title": "Integrirani krug – miniaturizacija elektronike",
+        "subtitle": "Temelj modernih uređaja",
+        "era": "Električni i elektronički kalkulatori",
+        "tooltip": "Čipovi smanjuju dimenzije i podižu pouzdanost.",
+        "detail": "Komponente se počinju spajati na mali silicijski čip, najviše u SAD-u. To smanjuje veličinu uređaja i povećava pouzdanost. Bez integriranih krugova ne bi bilo džepnih kalkulatora ni modernih računala."
+      },
+      {
+        "id": "t-1971-micro",
+        "yearSort": 1971,
+        "segment": "digital",
+        "image": "/assets/images/final/extra/FOTKE ZA VREMEPLOV/1920px-Intel_C4004.jpg",
+        "gap": "md",
+        "isFeatured": false,
+        "yearLabel": "1971.",
+        "title": "Mikroprocesor – računalo na jednom čipu",
+        "subtitle": "“Mozak” uređaja staje na čip",
+        "era": "Električni i elektronički kalkulatori",
+        "tooltip": "Intel 4004 kao velika prekretnica.",
+        "detail": "Intel 4004 (SAD) pokazuje da se “mozak” uređaja može smjestiti na jedan čip. To omogućuje da uređaji postanu mali, jeftiniji i dovoljno snažni za džep. Mikroprocesor je prekretnica za kalkulatore i osobna računala."
+      },
+      {
+        "id": "t-1971-digitron",
+        "yearSort": 1971.1,
+        "segment": "digital",
+        "image": "/assets/images/final/extra/FOTKE ZA VREMEPLOV/11-retro-digitron-1.jpg",
+        "gap": "md",
+        "isFeatured": true,
+        "yearLabel": "1971.",
+        "title": "DIGITRON DB-800 – prvi europski digitalni džepni kalkulator",
+        "subtitle": "Europski odgovor iz Istre",
+        "era": "Električni i elektronički kalkulatori",
+        "tooltip": "Digitron kao važan igrač miniaturizacije računanja.",
+        "detail": "U Bujama započinje proizvodnja Digitrona DB-800, prvog europskog digitalnog džepnog kalkulatora. U isto vrijeme kad svijet ulazi u eru čipova, Europa dobiva vlastiti džepni kalkulator iz Istre. To Digitron pozicionira kao relevantnog igrača u globalnoj revoluciji miniaturizacije računanja.",
+        "featuredLabel": "BUJE",
+        "ctaHref": "/hr/digitron-i-buje/i-bi-digitron/",
+        "ctaLabel": "Pročitaj više o Digitronu"
+      },
+      {
+        "id": "t-2007",
+        "yearSort": 2007,
+        "segment": "quantum",
+        "image": "/assets/images/final/extra/FOTKE ZA VREMEPLOV/Steve_Jobs_Headshot_2010-CROP.jpg",
+        "gap": "md",
+        "isFeatured": false,
+        "yearLabel": "2007.",
+        "title": "iPhone (SAD) – računalo u džepu za svakoga",
+        "subtitle": "Računanje postaje mainstream",
+        "era": "Integrirani digitalni uređaji",
+        "tooltip": "Pametni telefon spaja više funkcija u jedan uređaj.",
+        "detail": "Steve Jobs predstavlja iPhone i popularizira ideju pametnog telefona: uređaj koji spaja telefon, internet i aplikacije – uključujući kalkulator. Računanje više nije poseban alat, nego svakodnevna funkcija u jednom džepnom uređaju. Ovo je trenutak kad “računalo” postaje mainstream predmet."
+      },
+      {
+        "id": "t-2019-quantum",
+        "yearSort": 2019,
+        "segment": "quantum",
+        "image": "/assets/images/final/extra/FOTKE ZA VREMEPLOV/Sycamore_Quantum_Chip.jpg",
+        "gap": "md",
+        "isFeatured": false,
+        "yearLabel": "2019.",
+        "title": "Kvantno računanje – novi tip računala",
+        "subtitle": "Početak nove ere",
+        "era": "Integrirani digitalni uređaji",
+        "tooltip": "Qubiti otvaraju novi pristup računanju.",
+        "detail": "Kvantna računala koriste qubite, koji se ponašaju drugačije od klasičnih bitova (0/1). Godine 2019. (SAD) se snažno popularizira ideja “kvantne nadmoći” za specifične zadatke. Ovo je početak nove ere računanja, još uvijek uglavnom u laboratorijima."
+      }
+    ],
+    "ui": {
+      "pageTitle": "Povijest alata i strojeva za računanje",
+      "toplineAria": "Linija vremena (pregled)",
+      "trackAria": "Navigacija kroz vrijeme",
+      "vtimelineAria": "Povijest alata i strojeva za računanje",
+      "scaleStartLabel": "35 000. pr. n. e.",
+      "scaleEndLabel": "sadašnjost"
+    }
+  }
 }
-
-
-

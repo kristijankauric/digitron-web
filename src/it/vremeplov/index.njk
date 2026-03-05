@@ -1,7 +1,7 @@
 ---
 layout: layouts/base.njk
-title: Vremeplov
-lang: hr
+title: Cronologia
+lang: it
 useTimelineStyles: true
 ---
 {% set timeline = timeline or (nav and nav.timeline) %}
@@ -124,18 +124,9 @@ useTimelineStyles: true
       {% endfor %}
     </div>
   </section>
-
-  <div class="vremeplov-lightbox" data-vremeplov-lightbox hidden aria-hidden="true">
-    <div class="vremeplov-lightbox__media">
-      <img class="vremeplov-lightbox__image" data-vremeplov-lightbox-image alt="" />
-    </div>
-    <div class="vremeplov-lightbox__panel" data-vremeplov-lightbox-panel>
-      <div class="vremeplov-lightbox__meta" data-vremeplov-lightbox-era></div>
-      <h2 class="vremeplov-lightbox__title" data-vremeplov-lightbox-title></h2>
-      <p class="vremeplov-lightbox__text" data-vremeplov-lightbox-detail></p>
-    </div>
-  </div>
 </main>
+
+
 
 
 

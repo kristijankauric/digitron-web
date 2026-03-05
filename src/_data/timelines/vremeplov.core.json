@@ -1,0 +1,162 @@
+{
+  "config": {
+    "stickyOverview": true,
+    "presentYear": 2026
+  },
+  "segments": [
+    {
+      "key": "premechanical",
+      "fromYear": -35000,
+      "toYear": 1622,
+      "widthRatio": 1
+    },
+    {
+      "key": "mechanical",
+      "fromYear": 850,
+      "toYear": 1899,
+      "widthRatio": 1
+    },
+    {
+      "key": "digital",
+      "fromYear": 1930,
+      "toYear": 1971.1,
+      "widthRatio": 1
+    },
+    {
+      "key": "quantum",
+      "fromYear": 2007,
+      "toYear": 2026,
+      "widthRatio": 1
+    }
+  ],
+  "events": [
+    {
+      "id": "t-35000bc",
+      "yearSort": -35000,
+      "segment": "premechanical",
+      "image": "/assets/images/final/extra/FOTKE ZA VREMEPLOV/Lebombo.jpg",
+      "gap": "md",
+      "isFeatured": false
+    },
+    {
+      "id": "t-3000bc-meso",
+      "yearSort": -3000,
+      "segment": "premechanical",
+      "image": "/assets/images/final/extra/FOTKE ZA VREMEPLOV/Mezopotamija.jpg",
+      "gap": "md",
+      "isFeatured": false
+    },
+    {
+      "id": "t-2500bc",
+      "yearSort": -2500,
+      "segment": "premechanical",
+      "image": "/assets/images/final/extra/FOTKE ZA VREMEPLOV/1-NMAH-AHB2017q001373.jpg",
+      "gap": "lg",
+      "isFeatured": false
+    },
+    {
+      "id": "t-850-alkh",
+      "yearSort": 850,
+      "segment": "mechanical",
+      "image": "/assets/images/final/extra/FOTKE ZA VREMEPLOV/Al-Khwarizmi.jpg",
+      "gap": "md",
+      "isFeatured": false
+    },
+    {
+      "id": "t-1614-1622",
+      "yearSort": 1618,
+      "segment": "mechanical",
+      "image": "/assets/images/final/extra/FOTKE ZA VREMEPLOV/2-NMAH-DOR2010-0515.jpg",
+      "gap": "md",
+      "isFeatured": false
+    },
+    {
+      "id": "t-1642",
+      "yearSort": 1642,
+      "segment": "mechanical",
+      "image": "/assets/images/final/extra/FOTKE ZA VREMEPLOV/Arts_et_Metiers_Pascaline_dsc03869.jpg",
+      "gap": "md",
+      "isFeatured": false
+    },
+    {
+      "id": "t-1673",
+      "yearSort": 1673,
+      "segment": "mechanical",
+      "image": "/assets/images/final/extra/FOTKE ZA VREMEPLOV/4-Christoph_Bernhard_Francke_-_Bildnis_des_Philosophen_Leibniz_(ca._1695).jpg",
+      "gap": "md",
+      "isFeatured": false
+    },
+    {
+      "id": "t-1822",
+      "yearSort": 1822,
+      "segment": "mechanical",
+      "image": "/assets/images/final/extra/FOTKE ZA VREMEPLOV/Babbageov Difference Engine.jpg",
+      "gap": "md",
+      "isFeatured": false
+    },
+    {
+      "id": "t-1899",
+      "yearSort": 1899,
+      "segment": "mechanical",
+      "image": "/assets/images/final/extra/FOTKE ZA VREMEPLOV/Industrijska proizvodnja mehani?kih kalkulatora.jpg",
+      "gap": "md",
+      "isFeatured": false
+    },
+    {
+      "id": "t-1930s",
+      "yearSort": 1930,
+      "segment": "digital",
+      "image": "/assets/images/final/extra/FOTKE ZA VREMEPLOV/5-Zuse_Patent_907948.jpg",
+      "gap": "md",
+      "isFeatured": false
+    },
+    {
+      "id": "t-1961",
+      "yearSort": 1961,
+      "segment": "digital",
+      "image": "/assets/images/final/extra/FOTKE ZA VREMEPLOV/8-608.jpg",
+      "gap": "md",
+      "isFeatured": false
+    },
+    {
+      "id": "t-1960s-ic",
+      "yearSort": 1960,
+      "segment": "digital",
+      "image": "/assets/images/final/extra/FOTKE ZA VREMEPLOV/10-NMAH-77-7857.jpg",
+      "gap": "md",
+      "isFeatured": false
+    },
+    {
+      "id": "t-1971-micro",
+      "yearSort": 1971,
+      "segment": "digital",
+      "image": "/assets/images/final/extra/FOTKE ZA VREMEPLOV/1920px-Intel_C4004.jpg",
+      "gap": "md",
+      "isFeatured": false
+    },
+    {
+      "id": "t-1971-digitron",
+      "yearSort": 1971.1,
+      "segment": "digital",
+      "image": "/assets/images/final/extra/FOTKE ZA VREMEPLOV/11-retro-digitron-1.jpg",
+      "gap": "md",
+      "isFeatured": true
+    },
+    {
+      "id": "t-2007",
+      "yearSort": 2007,
+      "segment": "quantum",
+      "image": "/assets/images/final/extra/FOTKE ZA VREMEPLOV/Steve_Jobs_Headshot_2010-CROP.jpg",
+      "gap": "md",
+      "isFeatured": false
+    },
+    {
+      "id": "t-2019-quantum",
+      "yearSort": 2019,
+      "segment": "quantum",
+      "image": "/assets/images/final/extra/FOTKE ZA VREMEPLOV/Sycamore_Quantum_Chip.jpg",
+      "gap": "md",
+      "isFeatured": false
+    }
+  ]
+}
