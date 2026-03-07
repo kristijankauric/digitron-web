@@ -139,6 +139,7 @@
     if (!page) {
       return;
     }
+    document.body.classList.add("is-vremeplov-page");
 
     var markers = Array.prototype.slice.call(page.querySelectorAll(".mk[data-target]"));
     var steps = Array.prototype.slice.call(page.querySelectorAll(".vtimeline-step[data-id]"));
@@ -466,50 +467,6 @@
       return Math.max(min, Math.min(max, value));
     }
 
-    function easeOut(value) {
-      return 1 - Math.pow(1 - value, 2);
-    }
-
-    function setStepVisualState(step, state) {
-      var info = step.querySelector("[data-info]");
-      var isActive = state.isActive;
-      var progress = clamp(state.progress || 0, 0, 1);
-      var readingProgress = clamp(state.readingProgress || 0, 0, 1);
-
-      step.classList.toggle("is-active", isActive);
-      step.classList.toggle("is-reading", isActive && readingProgress > 0.38);
-      step.style.setProperty("--timeline-step-progress", progress.toFixed(3));
-      step.style.setProperty("--timeline-reading-progress", readingProgress.toFixed(3));
-      step.style.setProperty("--timeline-icon-current", state.iconSize + "px");
-      step.style.setProperty("--timeline-icon-shift", state.iconShift + "px");
-
-      if (!info) {
-        return;
-      }
-      if (isActive) {
-        info.removeAttribute("hidden");
-      } else {
-        info.setAttribute("hidden", "");
-      }
-    }
-
-    function getStepSizing() {
-      if (window.matchMedia("(max-width: 900px)").matches) {
-        return {
-          base: 116,
-          focus: Math.min(window.innerWidth * 0.84, 320),
-          reading: Math.min(window.innerWidth * 0.58, 212),
-          shift: 4
-        };
-      }
-      return {
-        base: 218,
-        focus: Math.min(window.innerWidth * 0.34, 462),
-        reading: Math.min(window.innerWidth * 0.24, 312),
-        shift: 6
-      };
-    }
-
     function getViewportStoryAnchorY() {
       var navH = parseInt(getComputedStyle(document.documentElement).getPropertyValue("--topline-offset"), 10) || 80;
       var toplineH = parseInt(getComputedStyle(document.documentElement).getPropertyValue("--topline-height"), 10) || 120;
@@ -522,23 +479,8 @@
       return window.scrollY + rect.top;
     }
 
-    function getReadingDistance() {
-      return window.matchMedia("(max-width: 900px)").matches ? Math.round(window.innerHeight * 0.24) : Math.round(window.innerHeight * 0.28);
-    }
-
     function getStepFocusTop(step) {
       return Math.max(0, getDocTop(step) - getViewportStoryAnchorY());
-    }
-
-    function getStepReadingTop(index) {
-      var step = steps[index];
-      if (!step) {
-        return 0;
-      }
-      var focusTop = getStepFocusTop(step);
-      var nextStep = steps[index + 1];
-      var nextFocusTop = nextStep ? getStepFocusTop(nextStep) : focusTop + Math.round(window.innerHeight * 0.9);
-      return Math.max(focusTop, Math.min(focusTop + getReadingDistance(), nextFocusTop - 24));
     }
 
     function findActiveStepIndex(anchorDocY) {
@@ -551,60 +493,87 @@
       return activeIndex;
     }
 
-    var currentActiveStepId = "";
+    var timelineState = "idle";
     var currentSnapIndex = 0;
+    var transitionTimers = [];
+    var touchStartY = null;
+    var touchStartX = null;
+    var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
-    function updateStepStatesFromScroll() {
-      syncToplineOffset();
-      var anchorViewportY = getViewportStoryAnchorY();
-      var anchorDocY = window.scrollY + anchorViewportY;
-      var activeIndex = findActiveStepIndex(anchorDocY);
-      var sizing = getStepSizing();
-      var activeStep = steps[activeIndex];
-      var activeId = activeStep ? activeStep.getAttribute("data-id") : "";
+    function getTimelineConfig() {
+      var reduced = reduceMotion.matches;
+      return {
+        transitionMs: reduced ? 120 : 1200,
+        lockMs: reduced ? 120 : 1200,
+        wheelThreshold: 8,
+        swipeThreshold: 28
+      };
+    }
 
-      steps.forEach(function (step, index) {
-        var state = {
-          isActive: false,
-          progress: 0,
-          readingProgress: 0,
-          iconSize: sizing.base,
-          iconShift: 0
-        };
-
-        if (index === activeIndex) {
-          var focusTop = getStepFocusTop(step);
-          var readingTop = getStepReadingTop(index);
-          var currentTop = window.scrollY;
-          var phaseDistance = Math.max(1, readingTop - focusTop);
-          var rawProgress = clamp((currentTop - focusTop) / phaseDistance, 0, 1);
-          var approachProgress = clamp(rawProgress / 0.5, 0, 1);
-          var readingProgress = clamp((rawProgress - 0.5) / 0.5, 0, 1);
-          var easedApproach = easeOut(approachProgress);
-          var easedReading = easeOut(readingProgress);
-
-          state.isActive = true;
-          state.progress = rawProgress;
-          state.readingProgress = readingProgress;
-          if (rawProgress < 0.5) {
-            state.iconSize = sizing.base + ((sizing.focus - sizing.base) * easedApproach);
-            state.iconShift = sizing.shift * easedApproach;
-          } else {
-            state.iconSize = sizing.focus + ((sizing.reading - sizing.focus) * easedReading);
-            state.iconShift = sizing.shift * (1 - easedReading);
-          }
-        }
-
-        setStepVisualState(step, state);
+    function clearTransitionTimers() {
+      transitionTimers.forEach(function (timer) {
+        window.clearTimeout(timer);
       });
+      transitionTimers = [];
+    }
 
+    function resetTransientClasses() {
+      steps.forEach(function (step) {
+        step.classList.remove("is-outgoing");
+        step.classList.remove("is-incoming");
+        step.classList.remove("is-text-bg-in");
+        step.classList.remove("is-text-content-in");
+      });
+    }
+
+    function applyStepVisibility() {
+      steps.forEach(function (step, index) {
+        var info = step.querySelector("[data-info]");
+        var isCurrent = index === currentSnapIndex;
+        step.classList.toggle("is-active", isCurrent);
+        step.classList.toggle("is-current", isCurrent);
+        if (!info) {
+          return;
+        }
+        if (isCurrent) {
+          info.removeAttribute("hidden");
+        } else {
+          info.setAttribute("hidden", "");
+        }
+      });
+    }
+
+    function updatePageState() {
+      var activeStep = steps[currentSnapIndex];
+      var activeId = activeStep ? (activeStep.getAttribute("data-id") || "") : "";
+      page.setAttribute("data-timeline-state", timelineState);
+      page.setAttribute("data-active-step", activeId);
+    }
+
+    function commitStep(index, shouldSetHash) {
+      currentSnapIndex = clamp(index, 0, steps.length - 1);
+      var activeStep = steps[currentSnapIndex];
+      var activeId = activeStep ? activeStep.getAttribute("data-id") : "";
+      applyStepVisibility();
       if (activeId) {
         setActiveMarker(activeId);
-        if (activeId !== currentActiveStepId) {
-          currentActiveStepId = activeId;
-          currentSnapIndex = activeIndex;
+        if (shouldSetHash !== false) {
           history.replaceState(null, "", "#" + activeId);
         }
+      }
+      updatePageState();
+      scheduleToplineConnectorsLayout();
+    }
+
+    function syncActiveStepFromViewport() {
+      if (timelineState !== "idle") {
+        return;
+      }
+      syncToplineOffset();
+      var anchorDocY = window.scrollY + getViewportStoryAnchorY();
+      var activeIndex = findActiveStepIndex(anchorDocY);
+      if (activeIndex !== currentSnapIndex) {
+        commitStep(activeIndex, true);
       }
     }
 
@@ -615,47 +584,108 @@
       }
       syncActiveRaf = window.requestAnimationFrame(function () {
         syncActiveRaf = null;
-        updateStepStatesFromScroll();
+        syncActiveStepFromViewport();
       });
     }
 
-    function scrollToStep(id, behavior) {
-      var step = document.getElementById(id);
+    function scrollWindowToStep(index) {
+      var step = steps[index];
       if (!step) {
         return;
       }
       syncToplineOffset();
-      var anchorY = getViewportStoryAnchorY();
-      var targetTop = window.scrollY + step.getBoundingClientRect().top - anchorY;
-
+      var targetTop = getStepFocusTop(step);
       window.scrollTo({
         top: Math.max(0, targetTop),
-        behavior: behavior || "smooth"
+        behavior: "auto"
       });
     }
 
-    function activateStepById(id, shouldScroll) {
-      if (!id) {
+    function scrollToFooterFromTimeline() {
+      var footer = document.querySelector("section.footer");
+      if (!footer) {
         return;
       }
-      var targetStep = document.getElementById(id);
-      if (!targetStep) {
+      var footerTop = window.scrollY + footer.getBoundingClientRect().top;
+      timelineState = "animating";
+      updatePageState();
+      window.scrollTo({
+        top: Math.max(0, footerTop),
+        behavior: "smooth"
+      });
+      window.setTimeout(function () {
+        timelineState = "idle";
+        updatePageState();
+      }, Math.max(320, getTimelineConfig().lockMs));
+    }
+
+    function animateToIndex(targetIndex, options) {
+      var opts = options || {};
+      var nextIndex = clamp(targetIndex, 0, steps.length - 1);
+      var prevIndex = currentSnapIndex;
+      if (nextIndex === prevIndex && !opts.force) {
+        return;
+      }
+      if (timelineState === "animating" && !opts.force) {
+        return;
+      }
+
+      clearTransitionTimers();
+      resetTransientClasses();
+      timelineState = "animating";
+      updatePageState();
+
+      var config = getTimelineConfig();
+      var outgoingStep = steps[prevIndex];
+      var incomingStep = steps[nextIndex];
+      if (outgoingStep && outgoingStep !== incomingStep) {
+        outgoingStep.classList.add("is-outgoing");
+      }
+      if (incomingStep) {
+        incomingStep.classList.add("is-incoming");
+      }
+
+      currentSnapIndex = nextIndex;
+      commitStep(nextIndex, opts.updateHash !== false);
+      scrollWindowToStep(nextIndex);
+
+      if (incomingStep) {
+        transitionTimers.push(window.setTimeout(function () {
+          incomingStep.classList.add("is-text-bg-in");
+        }, Math.min(60, config.transitionMs)));
+
+        transitionTimers.push(window.setTimeout(function () {
+          incomingStep.classList.add("is-text-content-in");
+        }, Math.min(180, config.transitionMs)));
+      }
+
+      transitionTimers.push(window.setTimeout(function () {
+        resetTransientClasses();
+        timelineState = "idle";
+        updatePageState();
+      }, config.lockMs));
+    }
+
+    function activateStepById(id, shouldAnimate, shouldSetHash) {
+      if (!id) {
         return;
       }
       var targetIndex = steps.findIndex(function (step) {
         return step.getAttribute("data-id") === id;
       });
-      if (targetIndex !== -1) {
-        currentSnapIndex = targetIndex;
+      if (targetIndex === -1) {
+        return;
       }
-      history.replaceState(null, "", "#" + id);
-      if (shouldScroll) {
-        scrollToStep(id, "smooth");
-      } else {
-        updateStepStatesFromScroll();
+      if (shouldAnimate === false) {
+        clearTransitionTimers();
+        resetTransientClasses();
+        timelineState = "idle";
+        commitStep(targetIndex, shouldSetHash !== false);
+        scrollWindowToStep(targetIndex);
+        updatePageState();
+        return;
       }
-      updateStepStatesFromScroll();
-      scheduleToplineConnectorsLayout();
+      animateToIndex(targetIndex, { updateHash: shouldSetHash !== false });
     }
 
     page.addEventListener("click", function (event) {
@@ -663,7 +693,10 @@
       if (mk) {
         event.preventDefault();
         event.stopPropagation();
-        activateStepById(mk.getAttribute("data-target"), true);
+        if (timelineState === "animating") {
+          return;
+        }
+        activateStepById(mk.getAttribute("data-target"), true, true);
         return;
       }
     });
@@ -672,40 +705,18 @@
       return true;
     }
 
-    function getActiveIndex() {
-      if (currentSnapIndex >= 0 && currentSnapIndex < steps.length) {
-        return currentSnapIndex;
-      }
-      var anchorDocY = window.scrollY + getViewportStoryAnchorY();
-      return findActiveStepIndex(anchorDocY);
-    }
-
-    var wheelLocked = false;
-    var wheelDeltaBuffer = 0;
-    function lockWheelTemporarily() {
-      wheelLocked = true;
-      wheelDeltaBuffer = 0;
-      window.setTimeout(function () {
-        wheelLocked = false;
-      }, 560);
-    }
-
     function jumpToAdjacentStep(direction) {
-      var currentIndex = getActiveIndex();
-      var nextIndex = clamp(currentIndex + direction, 0, steps.length - 1);
-      if (nextIndex === currentIndex) {
+      if (timelineState === "animating") {
         return;
       }
-
-      currentSnapIndex = nextIndex;
-      var targetTop = getStepFocusTop(steps[nextIndex]);
-
-      window.scrollTo({
-        top: Math.max(0, targetTop),
-        behavior: "smooth"
-      });
-      scheduleActiveSyncFromViewport();
-      lockWheelTemporarily();
+      var nextIndex = clamp(currentSnapIndex + direction, 0, steps.length - 1);
+      if (nextIndex === currentSnapIndex) {
+        if (direction > 0 && currentSnapIndex === steps.length - 1) {
+          scrollToFooterFromTimeline();
+        }
+        return;
+      }
+      animateToIndex(nextIndex, { updateHash: true });
     }
 
     function isWithinTimelineStory() {
@@ -724,11 +735,9 @@
         return;
       }
       if (event.target && (event.target.closest(".infoBox") || event.target.closest(".topline__scroller"))) {
-        wheelDeltaBuffer = 0;
         return;
       }
       if (!isWithinTimelineStory()) {
-        wheelDeltaBuffer = 0;
         return;
       }
 
@@ -736,23 +745,19 @@
       // only advance once the accumulated gesture is strong enough.
       event.preventDefault();
 
-      if (wheelLocked) {
+      if (timelineState === "animating") {
         return;
       }
 
-      wheelDeltaBuffer += event.deltaY;
-      if (Math.abs(wheelDeltaBuffer) < 60) {
+      if (Math.abs(event.deltaY) < getTimelineConfig().wheelThreshold) {
         return;
       }
 
-      jumpToAdjacentStep(wheelDeltaBuffer > 0 ? 1 : -1);
-      wheelDeltaBuffer = 0;
+      jumpToAdjacentStep(event.deltaY > 0 ? 1 : -1);
     }
 
     document.addEventListener("wheel", handleTimelineWheel, { passive: false, capture: true });
 
-    var touchStartY = null;
-    var touchStartX = null;
     window.addEventListener("touchstart", function (event) {
       if (!event.touches || event.touches.length !== 1) {
         return;
@@ -767,7 +772,7 @@
         touchStartY = null;
         return;
       }
-      if (wheelLocked || touchStartY === null || touchStartX === null || !event.changedTouches || event.changedTouches.length !== 1) {
+      if (timelineState === "animating" || touchStartY === null || touchStartX === null || !event.changedTouches || event.changedTouches.length !== 1) {
         touchStartX = null;
         touchStartY = null;
         return;
@@ -779,7 +784,8 @@
       touchStartX = null;
       touchStartY = null;
 
-      if (Math.abs(deltaY) < 48 || Math.abs(deltaY) <= Math.abs(deltaX) * 1.15) {
+      var swipeThreshold = getTimelineConfig().swipeThreshold;
+      if (Math.abs(deltaY) < swipeThreshold || Math.abs(deltaY) <= Math.abs(deltaX) * 1.05) {
         return;
       }
       if (touch.target && (touch.target.closest(".infoBox") || touch.target.closest(".topline__scroller"))) {
@@ -797,7 +803,10 @@
       if (!id) {
         return;
       }
-      activateStepById(id, false);
+      if (timelineState === "animating") {
+        return;
+      }
+      activateStepById(id, true, false);
     });
 
     (function initFromHash() {
@@ -809,13 +818,10 @@
         if (hashIndex !== -1) {
           currentSnapIndex = hashIndex;
         }
-        scrollToStep(id, "auto");
+        activateStepById(id, false, false);
       } else if (markers[0]) {
         var firstId = markers[0].getAttribute("data-target");
-        var firstStep = document.getElementById(firstId);
-        currentSnapIndex = 0;
-        window.scrollTo({ top: Math.max(0, firstStep ? getStepFocusTop(firstStep) : 0), behavior: "auto" });
-        history.replaceState(null, "", "#" + firstId);
+        activateStepById(firstId, false, true);
       }
       setTimeout(function () {
         syncToplineOffset();

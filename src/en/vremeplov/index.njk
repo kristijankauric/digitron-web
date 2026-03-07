@@ -122,14 +122,19 @@ useTimelineStyles: true
 
           <aside class="vtimeline-step__info" data-info hidden>
             <div class="infoBox">
-              <div class="infoBox__head">
-                <span class="infoBox__meta">{{ event.era }}</span>
+              <div class="infoBox__bgLayer" aria-hidden="true"></div>
+              <div class="infoBox__content">
+                <div class="infoBox__head">
+                  <span class="infoBox__meta">{{ event.era }}</span>
+                </div>
+                {% set titleMain = event.title %}
+                {% if event.subtitle %}{% set titleMain = event.title | replace(" – " ~ event.subtitle, "") | replace(" - " ~ event.subtitle, "") %}{% endif %}
+                <h2 class="infoBox__title"><span class="infoBox__title-main">{{ titleMain }}</span>{% if event.subtitle %}<span class="infoBox__subtitle">{{ event.subtitle }}</span>{% endif %}</h2>
+                <p class="infoBox__body">{{ event.detail }}</p>
+                {% if event.isFeatured and event.ctaHref and event.ctaLabel %}
+                <p class="infoBox__ctaRow"><a class="infoBox__cta" href="{{ event.ctaHref }}">{{ event.ctaLabel }}</a></p>
+                {% endif %}
               </div>
-              <h2 class="infoBox__title">{{ event.title }}</h2>
-              <p>{{ event.detail }}</p>
-              {% if event.isFeatured and event.ctaHref and event.ctaLabel %}
-              <p><a class="infoBox__cta" href="{{ event.ctaHref }}">{{ event.ctaLabel }}</a></p>
-              {% endif %}
             </div>
           </aside>
         </div>
@@ -139,8 +144,3 @@ useTimelineStyles: true
   </section>
 
 </main>
-
-
-
-
-
