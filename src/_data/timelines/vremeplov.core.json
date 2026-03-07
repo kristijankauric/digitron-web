@@ -14,7 +14,7 @@
       "key": "algorithmic",
       "fromYear": 850,
       "toYear": 851,
-      "widthRatio": 0.2
+      "widthRatio": 0.35
     },
     {
       "key": "mechanical",
@@ -30,9 +30,9 @@
     },
     {
       "key": "quantum",
-      "fromYear": 2007,
+      "fromYear": 1977,
       "toYear": 2026,
-      "widthRatio": 1
+      "widthRatio": 1.15
     }
   ],
   "events": [
@@ -117,18 +117,18 @@
       "isFeatured": false
     },
     {
-      "id": "t-1961",
-      "yearSort": 1961,
-      "segment": "digital",
-      "image": "/assets/images/final/extra/FOTKE ZA VREMEPLOV/AnitaMk8-01.jpg",
-      "gap": "md",
-      "isFeatured": false
-    },
-    {
       "id": "t-1960s-ic",
       "yearSort": 1960,
       "segment": "digital",
       "image": "/assets/images/final/extra/FOTKE ZA VREMEPLOV/Vlsiopamp2.gif",
+      "gap": "md",
+      "isFeatured": false
+    },
+    {
+      "id": "t-1961",
+      "yearSort": 1961,
+      "segment": "digital",
+      "image": "/assets/images/final/extra/FOTKE ZA VREMEPLOV/AnitaMk8-01.jpg",
       "gap": "md",
       "isFeatured": false
     },
@@ -147,6 +147,14 @@
       "image": "/assets/images/final/extra/FOTKE ZA VREMEPLOV/11-retro-digitron-1.jpg",
       "gap": "md",
       "isFeatured": true
+    },
+    {
+      "id": "t-1977-pc",
+      "yearSort": 1977,
+      "segment": "quantum",
+      "image": "/assets/images/final/extra/FOTKE ZA VREMEPLOV/pc.jpg",
+      "gap": "md",
+      "isFeatured": false
     },
     {
       "id": "t-2007",

@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
   <link href="/assets/css/webflow-style.css" rel="stylesheet" type="text/css" />
-  {% if useTimelineStyles %}<link href="/assets/css/vremeplov.css?v=20260305c" rel="stylesheet" type="text/css" />{% endif %}
+  {% if useTimelineStyles %}<link href="/assets/css/vremeplov.css?v=20260306b" rel="stylesheet" type="text/css" />{% endif %}
   <style>
     html,
     body,
@@ -56,7 +56,8 @@
     }
 
     .navbar07_menu-left > .navbar07_link.w--current {
-      color: var(--dim-grey) !important;
+      color: #a9afa6 !important;
+      opacity: 1 !important;
     }
 
     .navbar07_dropdown-link-2,
@@ -100,6 +101,98 @@
       width: 220px;
       max-width: 100%;
       height: auto;
+    }
+
+    .footer3_top-wrapper {
+      display: grid !important;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+      align-items: start;
+      column-gap: 3rem;
+    }
+
+    .footer3_left-wrapper {
+      min-width: 0 !important;
+      width: 100%;
+      max-width: none;
+      padding: 2rem 2.75rem !important;
+      box-sizing: border-box;
+      margin-inline: 0;
+    }
+
+    .footer-project__logo,
+    .footer-project__media,
+    .footer-project__content {
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+
+    .logo-footer {
+      width: 240px !important;
+      margin: 0 !important;
+      filter: brightness(0) invert(1);
+    }
+
+    .footer-media {
+      width: 100% !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+
+    .footer-media__video {
+      width: 100% !important;
+      height: auto !important;
+      object-fit: contain !important;
+    }
+
+    .footer3_details-wrapper {
+      min-width: 0 !important;
+    }
+
+    .text-ime-galerije,
+    .naslov-radno-vrijeme,
+    .text-dodatni-info,
+    .text-tel-radno {
+      padding-left: 0 !important;
+      color: #fff !important;
+    }
+
+    .footer-nav {
+      display: grid;
+      grid-template-columns: 1fr;
+      align-content: start;
+      row-gap: 1.75rem;
+      min-width: 0;
+    }
+
+    .footer-nav__primary {
+      display: block;
+      justify-self: start;
+    }
+
+    .footer-nav__secondary {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      column-gap: 2rem;
+      row-gap: 1.25rem;
+      margin-top: 2.25rem;
+      align-items: start;
+    }
+
+    .footer-nav__column {
+      min-width: 0;
+      width: 100%;
+    }
+
+    .footer-nav__impressum {
+      margin-top: 0.75rem;
+      display: block;
+      justify-self: start;
+      text-align: left;
+    }
+
+    .footer1_link.link-impressum {
+      margin-top: 0 !important;
+      display: inline-block;
     }
 
     .navbar07_component,
@@ -179,6 +272,38 @@
     }
 
     @media (max-width: 991px) {
+      .footer3_top-wrapper {
+        grid-template-columns: 1fr !important;
+        row-gap: 2rem;
+      }
+
+      .footer3_left-wrapper {
+        padding: 1.5rem 0 !important;
+      }
+
+      #w-node-footer-nav {
+        grid-column: 1 / -1 !important;
+        grid-row: auto !important;
+      }
+
+      .footer-nav {
+        width: 100%;
+        padding: 0 0 0.5rem;
+        box-sizing: border-box;
+      }
+
+      .footer-project__content {
+        margin-bottom: 1rem !important;
+      }
+
+      .footer-nav__secondary {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        margin-top: 1.5rem;
+      }
+    }
+
+    @media (max-width: 991px) {
       .navbar07_container {
         justify-content: space-between !important;
         align-items: center !important;
@@ -214,6 +339,29 @@
       .navbar07_menu .navbar07_link.w--current {
         color: var(--yellow-background) !important;
       }
+
+      .footer3_left-wrapper {
+        max-width: none;
+        padding: 1.5rem 1.5rem 2rem !important;
+      }
+
+      .footer-nav {
+        padding: 0 1.5rem 1rem;
+      }
+
+      .footer-nav__primary {
+        margin-top: 0;
+      }
+
+      .footer-nav__secondary {
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
+        margin-top: 1rem;
+      }
+
+      .footer-nav__impressum {
+        justify-content: flex-start;
+      }
     }
 
   </style>
@@ -227,7 +375,7 @@
   </div>
   <script src="/assets/js/jquery.js?site=64ca73a36e15b3d43b1ede7e" type="text/javascript"></script>
   <script src="/assets/js/webflow-script.js" type="text/javascript"></script>
-  <script src="/assets/js/main.js?v=20260305c" type="text/javascript"></script>
+  <script src="/assets/js/main.js?v=20260306b" type="text/javascript"></script>
 </body>
 </html>
 

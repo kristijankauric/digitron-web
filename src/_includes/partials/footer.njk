@@ -8,10 +8,10 @@
           <div class="padding-bottom padding-xxlarge">
             <div class="w-layout-grid footer3_top-wrapper">
               <div class="footer3_left-wrapper">
-                <div class="margin-bottom margin-medium">
+                <div class="margin-bottom margin-medium footer-project__logo">
                   <a href="{{ t.home_href | default('/hr/') }}" class="footer3_logo-link w-nav-brand"><img src="/assets/images/final/extra/FOTKE%20ZA%20VREMEPLOV/logo%20novi%20Digitron.Buje%20informati%C4%8Dka%20pri%C4%8Da%20copy%206.png" loading="lazy" alt="{{ t.logo_alt | default('digitron.buje logo') }}" class="logo-footer"/></a>
                 </div>
-                <div class="margin-bottom margin-small footer-media">
+                <div class="margin-bottom margin-small footer-media footer-project__media">
                   <video
                     class="footer-media__video"
                     data-footer-loop-video
@@ -25,28 +25,44 @@
                     <source src="/assets/images/final/extra/video%20slikice/footer%20buje.mp4" type="video/mp4" />
                   </video>
                 </div>
-                <div class="margin-bottom margin-small">
-                  <div class="footer3_details-wrapper">
+                <div class="margin-bottom margin-small footer-project__content">
+                  <div class="footer3_details-wrapper footer-project__details">
                     <div class="margin-bottom margin-xxsmall"><div class="text-ime-galerije">{{ t.footer_brand_name | default("digitron.buje") }}</div></div>
                     <div class="margin-bottom margin-xxsmall"><div class="naslov-radno-vrijeme">{{ t.footer_tagline | default("Digitalna interpretacija industrijske baštine Buja") }}</div></div>
-                    <div class="margin-bottom margin-xxsmall"><div class="text-dodatni-info">{{ t.footer_project_label | default("Projekt Grada Buja - Buie") }}</div></div>
-                    <div class="margin-bottom margin-xxsmall"><div class="text-tel-radno">{{ t.footer_copyright | default("© 2026 Digitron Buje") }}</div></div>
+                    <div class="margin-bottom margin-xxsmall"><div class="text-dodatni-info">{{ t.footer_description | default("Ova digitalna izložba istražuje razvoj strojeva za računanje – od najranijih alata do elektroničkih kalkulatora – i priču o tvornici Digitron, koja je iz Buja postala dio svjetske tehnološke revolucije.") }}</div></div>
+                    <div class="margin-bottom margin-xxsmall"><div class="text-dodatni-info">{{ t.footer_project_label | default("Projekt Grada Buje – Buie") }}</div></div>
+                    <div class="margin-bottom margin-xxsmall"><div class="text-tel-radno">{{ t.footer_copyright | default("© Grad Buje – Buie, 2026") }}</div></div>
                   </div>
                 </div>
               </div>
 
-              <div id="w-node-footer-nav" class="w-layout-grid footer1_menu-wrapper">
-                {% for section in nav.sections %}
-                <div class="footer1_link-list">
-                  <div class="margin-bottom margin-xsmall"><div class="text-weight-semibold-2">{{ section.title }}</div></div>
-                  {% for item in section.items %}
-                  <a href="{{ item.href }}" class="footer1_link{% if page.url == item.href %} w--current{% endif %}">{{ item.label }}</a>
-                  {% endfor %}
-                  {% if loop.last %}
-                  <a href="{{ t.impressum_href | default('/impressum') }}" class="footer1_link link-impressum">{{ t.impressum_label | default("Impressum") }}</a>
-                  {% endif %}
+              <div id="w-node-footer-nav" class="footer-nav">
+                <div class="footer-nav__primary">
+                  {% set primary = nav.sections[0] %}
+                  <div class="footer1_link-list footer-nav__column footer-nav__column--primary">
+                    <div class="margin-bottom margin-xsmall"><div class="text-weight-semibold-2">{{ primary.title }}</div></div>
+                    {% if primary.href %}
+                    <a href="{{ primary.href }}" class="footer1_link{% if page.url == primary.href %} w--current{% endif %}">{{ primary.title }}</a>
+                    {% endif %}
+                  </div>
                 </div>
-                {% endfor %}
+
+                <div class="footer-nav__secondary">
+                  {% for section in nav.sections %}
+                  {% if loop.index0 > 0 %}
+                  <div class="footer1_link-list footer-nav__column">
+                    <div class="margin-bottom margin-xsmall"><div class="text-weight-semibold-2">{{ section.title }}</div></div>
+                    {% for item in section.items %}
+                    <a href="{{ item.href }}" class="footer1_link{% if page.url == item.href %} w--current{% endif %}">{{ item.label }}</a>
+                    {% endfor %}
+                  </div>
+                  {% endif %}
+                  {% endfor %}
+                </div>
+
+                <div class="footer-nav__impressum">
+                  <a href="{{ t.impressum_href | default('/impressum') }}" class="footer1_link link-impressum">{{ t.impressum_label | default("Impressum") }}</a>
+                </div>
               </div>
             </div>
           </div>

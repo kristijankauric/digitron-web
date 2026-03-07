@@ -5,7 +5,7 @@
   },
   "vremeplov": {
     "href": "/hr/vremeplov/",
-    "label": "Vremeplov"
+    "label": "Vremeplov računanja"
   },
   "contact": {
     "href": "/impressum",
@@ -13,7 +13,7 @@
   },
   "sections": [
     {
-      "title": "Vremeplov",
+      "title": "Vremeplov računanja",
       "href": "/hr/vremeplov/"
     },
     {
@@ -110,7 +110,7 @@
           "label": "Rani računski alati",
           "labelMain": "Rani računski",
           "labelSub": "alati",
-          "rangeLabel": "oko 35 000. pr. n. e. – 1622."
+          "rangeLabel": "oko 35 000 pr. n. e. – 1622"
         },
         {
           "key": "mechanical",
@@ -120,7 +120,7 @@
           "label": "Mehanički računski strojevi",
           "labelMain": "Mehanički računski",
           "labelSub": "strojevi",
-          "rangeLabel": "9. stoljeće – kraj 19. stoljeća"
+          "rangeLabelHtml": "<span class=\"seg__range-stack\"><span>9. stoljeće -</span><span>kraj 19. stoljeća</span></span>"
         },
         {
           "key": "digital",
@@ -130,7 +130,7 @@
           "label": "Električni i elektronički kalkulatori",
           "labelMain": "Električni i elektronički",
           "labelSub": "kalkulatori",
-          "rangeLabel": "1930-e – 1971."
+          "rangeLabel": "1930-e – 1971"
         },
         {
           "key": "quantum",
@@ -140,7 +140,7 @@
           "label": "Integrirani digitalni uređaji",
           "labelMain": "Integrirani digitalni",
           "labelSub": "uređaji",
-          "rangeLabel": "2007. – danas"
+          "rangeLabel": "2007 – danas"
         }
       ]
     },
@@ -153,7 +153,7 @@
         "label": "Rani računski alati",
         "labelMain": "Rani računski",
         "labelSub": "alati",
-        "rangeLabel": "oko 35 000. pr. n. e. – 1622."
+        "rangeLabel": "oko 35 000 pr. n. e. – 1622"
       },
       {
         "key": "mechanical",
@@ -163,7 +163,7 @@
         "label": "Mehanički računski strojevi",
         "labelMain": "Mehanički računski",
         "labelSub": "strojevi",
-        "rangeLabel": "9. stoljeće – kraj 19. stoljeća"
+        "rangeLabelHtml": "<span class=\"seg__range-stack\"><span>9. stoljeće -</span><span>kraj 19. stoljeća</span></span>"
       },
       {
         "key": "digital",
@@ -173,7 +173,7 @@
         "label": "Električni i elektronički kalkulatori",
         "labelMain": "Električni i elektronički",
         "labelSub": "kalkulatori",
-        "rangeLabel": "1930-e – 1971."
+        "rangeLabel": "1930-e – 1971"
       },
       {
         "key": "quantum",
@@ -183,7 +183,7 @@
         "label": "Integrirani digitalni uređaji",
         "labelMain": "Integrirani digitalni",
         "labelSub": "uređaji",
-        "rangeLabel": "2007. – danas"
+        "rangeLabel": "2007 – danas"
       }
     ],
     "events": [
@@ -194,9 +194,9 @@
         "image": "/assets/images/final/extra/FOTKE ZA VREMEPLOV/Lebombo.jpg",
         "gap": "md",
         "isFeatured": false,
-        "yearLabel": "oko 35 000. pr. n. e.",
-        "toplineLabelHtml": "oko 35 000.<br>pr. n. e.",
-        "axisLabelHtml": "<span class=\"axisYear__line axisYear__line--nowrap\">oko 35 000.</span><span class=\"axisYear__line\">pr. n. e.</span>",
+        "yearLabel": "oko 35 000 pr. n. e.",
+        "toplineLabelHtml": "oko 35 000<br>pr. n. e.",
+        "axisLabelHtml": "<span class=\"axisYear__line axisYear__line--nowrap\">oko 35 000</span><span class=\"axisYear__line\">pr. n. e.</span>",
         "title": "Lebombo kost – najstariji trag bilježenja količina",
         "subtitle": "Najstariji trag bilježenja količina",
         "era": "Rani računski alati",
@@ -210,9 +210,9 @@
         "image": "/assets/images/final/extra/FOTKE ZA VREMEPLOV/Mezopotamija.jpg",
         "gap": "md",
         "isFeatured": false,
-        "yearLabel": "oko 3000. pr. n. e.",
-        "toplineLabelHtml": "oko 3000.<br>pr. n. e.",
-        "axisLabelHtml": "<span class=\"axisYear__line axisYear__line--nowrap\">oko 3000.</span><span class=\"axisYear__line\">pr. n. e.</span>",
+        "yearLabel": "oko 3 000 pr. n. e.",
+        "toplineLabelHtml": "oko 3 000<br>pr. n. e.",
+        "axisLabelHtml": "<span class=\"axisYear__line axisYear__line--nowrap\">oko 3 000</span><span class=\"axisYear__line\">pr. n. e.</span>",
         "title": "Mezopotamija – prvi zapis brojeva",
         "subtitle": "Brojevi na glinenim pločicama",
         "era": "Rani računski alati",
@@ -226,9 +226,9 @@
         "image": "/assets/images/final/extra/FOTKE ZA VREMEPLOV/1-NMAH-AHB2017q001373.jpg",
         "gap": "lg",
         "isFeatured": false,
-        "yearLabel": "oko 2500. pr. n. e.",
-        "toplineLabelHtml": "oko 2500.<br>pr. n. e.",
-        "axisLabelHtml": "<span class=\"axisYear__line axisYear__line--nowrap\">oko 2500.</span><span class=\"axisYear__line\">pr. n. e.</span>",
+        "yearLabel": "oko 2 500 pr. n. e.",
+        "toplineLabelHtml": "oko 2 500<br>pr. n. e.",
+        "axisLabelHtml": "<span class=\"axisYear__line axisYear__line--nowrap\">oko 2 500</span><span class=\"axisYear__line\">pr. n. e.</span>",
         "title": "Abakus – prvi sustavni računski alat",
         "subtitle": "Sustavno računanje kuglicama",
         "era": "Rani računski alati",
@@ -256,7 +256,7 @@
         "image": "/assets/images/final/extra/FOTKE ZA VREMEPLOV/2-NMAH-DOR2010-0515.jpg",
         "gap": "md",
         "isFeatured": false,
-        "yearLabel": "1614. – 1622.",
+        "yearLabel": "1614 – 1622",
         "title": "Logaritmi i logaritamsko računalo – prvi “inženjerski” računski alat",
         "subtitle": "Prijelaz prema inženjerskom računanju",
         "era": "Mehanički računski strojevi",
@@ -270,7 +270,7 @@
         "image": "/assets/images/final/extra/FOTKE ZA VREMEPLOV/Arts_et_Metiers_Pascaline_dsc03869.jpg",
         "gap": "md",
         "isFeatured": false,
-        "yearLabel": "1642.",
+        "yearLabel": "1642",
         "title": "Pascalina – prvi mehanički kalkulator",
         "subtitle": "Računanje prelazi na mehanizam",
         "era": "Mehanički računski strojevi",
@@ -284,7 +284,7 @@
         "image": "/assets/images/final/extra/FOTKE ZA VREMEPLOV/4-Christoph_Bernhard_Francke_-_Bildnis_des_Philosophen_Leibniz_(ca._1695).jpg",
         "gap": "md",
         "isFeatured": false,
-        "yearLabel": "1673.",
+        "yearLabel": "1673",
         "title": "Leibnizov računski stroj – sve 4 operacije",
         "subtitle": "Mehaničko računanje postaje svestrano",
         "era": "Mehanički računski strojevi",
@@ -298,7 +298,7 @@
         "image": "/assets/images/final/extra/FOTKE ZA VREMEPLOV/Babbageov Difference Engine.jpg",
         "gap": "md",
         "isFeatured": false,
-        "yearLabel": "1822.",
+        "yearLabel": "1822",
         "title": "Babbageov Difference Engine – stroj koji računa tablice",
         "subtitle": "Korak prema programabilnosti",
         "era": "Mehanički računski strojevi",
@@ -313,6 +313,7 @@
         "gap": "md",
         "isFeatured": false,
         "yearLabel": "kraj 19. stoljeća",
+        "toplineLabelHtml": "kraj<br>19. stoljeća",
         "title": "Industrijska proizvodnja mehaničkih kalkulatora",
         "subtitle": "Računanje ulazi u urede i tvornice",
         "era": "Mehanički računski strojevi",
@@ -340,7 +341,7 @@
         "image": "/assets/images/final/extra/FOTKE ZA VREMEPLOV/8-608.jpg",
         "gap": "md",
         "isFeatured": false,
-        "yearLabel": "1961.",
+        "yearLabel": "1961",
         "title": "ANITA (UK) – prvi potpuno elektronički kalkulator",
         "subtitle": "Kraj mehaničke ere",
         "era": "Električni i elektronički kalkulatori",
@@ -368,7 +369,7 @@
         "image": "/assets/images/final/extra/FOTKE ZA VREMEPLOV/1920px-Intel_C4004.jpg",
         "gap": "md",
         "isFeatured": false,
-        "yearLabel": "1971.",
+        "yearLabel": "1971",
         "title": "Mikroprocesor – računalo na jednom čipu",
         "subtitle": "“Mozak” uređaja staje na čip",
         "era": "Električni i elektronički kalkulatori",
@@ -382,7 +383,7 @@
         "image": "/assets/images/final/extra/FOTKE ZA VREMEPLOV/11-retro-digitron-1.jpg",
         "gap": "md",
         "isFeatured": true,
-        "yearLabel": "1971.",
+        "yearLabel": "1971",
         "title": "DIGITRON DB-800 – prvi europski digitalni džepni kalkulator",
         "subtitle": "Europski odgovor iz Istre",
         "era": "Električni i elektronički kalkulatori",
@@ -399,7 +400,7 @@
         "image": "/assets/images/final/extra/FOTKE ZA VREMEPLOV/Steve_Jobs_Headshot_2010-CROP.jpg",
         "gap": "md",
         "isFeatured": false,
-        "yearLabel": "2007.",
+        "yearLabel": "2007",
         "title": "iPhone (SAD) – računalo u džepu za svakoga",
         "subtitle": "Računanje postaje mainstream",
         "era": "Integrirani digitalni uređaji",
@@ -413,7 +414,7 @@
         "image": "/assets/images/final/extra/FOTKE ZA VREMEPLOV/Sycamore_Quantum_Chip.jpg",
         "gap": "md",
         "isFeatured": false,
-        "yearLabel": "2019.",
+        "yearLabel": "2019",
         "title": "Kvantno računanje – novi tip računala",
         "subtitle": "Početak nove ere",
         "era": "Integrirani digitalni uređaji",
@@ -426,8 +427,8 @@
       "toplineAria": "Linija vremena (pregled)",
       "trackAria": "Navigacija kroz vrijeme",
       "vtimelineAria": "Povijest alata i strojeva za računanje",
-      "scaleStartLabel": "35 000. pr. n. e.",
-      "scaleEndLabel": "sadašnjost"
+      "scaleStartLabel": "35 000 pr. n. e.",
+      "scaleEndLabel": "danas"
     }
   }
 }

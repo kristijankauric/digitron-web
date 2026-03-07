@@ -147,17 +147,6 @@
       return;
     }
 
-    var lightbox = page.querySelector("[data-vremeplov-lightbox]");
-    var lightboxImage = lightbox ? lightbox.querySelector("[data-vremeplov-lightbox-image]") : null;
-    var lightboxEra = lightbox ? lightbox.querySelector("[data-vremeplov-lightbox-era]") : null;
-    var lightboxTitle = lightbox ? lightbox.querySelector("[data-vremeplov-lightbox-title]") : null;
-    var lightboxDetail = lightbox ? lightbox.querySelector("[data-vremeplov-lightbox-detail]") : null;
-    var lightboxOpen = false;
-
-    if (lightbox && lightbox.parentElement !== document.body) {
-      document.body.appendChild(lightbox);
-    }
-
     var lastToplineHeight = 120;
 
     function syncToplineOffset() {
@@ -291,20 +280,15 @@
 
     function layoutToplineLabels() {
       var lines = Array.prototype.slice.call(page.querySelectorAll(".seg__line"));
-      var closeThresholdPercent = 8;
-      var pairNudgePx = 8;
+      var isMobile = window.matchMedia("(max-width: 900px)").matches;
+      var labelOffset = isMobile ? -28 : -32;
+      var pairNudgePx = isMobile ? 8 : 12;
+      var clusterNudgePx = isMobile ? 14 : 18;
 
       lines.forEach(function (line) {
         var lineMarkers = Array.prototype.slice.call(line.querySelectorAll(".mk[data-target]"));
-        if (lineMarkers.length < 2) {
-          lineMarkers.forEach(function (mk) {
-            mk.classList.remove("mk--compact");
-            mk.classList.remove("is-edge-left");
-            mk.classList.remove("is-edge-right");
-            mk.style.setProperty("--mk-nudge", "0px");
-          });
-          return;
-        }
+        var lineWidth = Math.max(1, Math.round(line.getBoundingClientRect().width || line.clientWidth || 1));
+        var nudgeMap = new Map();
 
         lineMarkers.sort(function (a, b) {
           var leftA = parseFloat((a.style.left || "0").replace("%", "")) || 0;
@@ -312,37 +296,45 @@
           return leftA - leftB;
         });
 
-        var nudgeMap = new Map();
-        lineMarkers.forEach(function (mk) {
-          mk.classList.remove("mk--compact");
-          mk.classList.remove("is-edge-left");
-          mk.classList.remove("is-edge-right");
-          nudgeMap.set(mk, 0);
-        });
-
         for (var i = 0; i < lineMarkers.length - 1; i += 1) {
-          var current = lineMarkers[i];
-          var next = lineMarkers[i + 1];
-          var currentLeft = parseFloat((current.style.left || "0").replace("%", "")) || 0;
-          var nextLeft = parseFloat((next.style.left || "0").replace("%", "")) || 0;
-          var distance = Math.abs(nextLeft - currentLeft);
-
-          if (distance <= closeThresholdPercent) {
-            current.classList.add("mk--compact");
-            next.classList.add("mk--compact");
-            nudgeMap.set(current, (nudgeMap.get(current) || 0) - pairNudgePx);
-            nudgeMap.set(next, (nudgeMap.get(next) || 0) + pairNudgePx);
+          var currentMk = lineMarkers[i];
+          var nextMk = lineMarkers[i + 1];
+          var currentLeftPx = ((parseFloat((currentMk.style.left || "0").replace("%", "")) || 0) / 100) * lineWidth;
+          var nextLeftPx = ((parseFloat((nextMk.style.left || "0").replace("%", "")) || 0) / 100) * lineWidth;
+          var gapPx = Math.abs(nextLeftPx - currentLeftPx);
+          if (gapPx < 18) {
+            nudgeMap.set(currentMk, (nudgeMap.get(currentMk) || 0) - clusterNudgePx);
+            nudgeMap.set(nextMk, (nudgeMap.get(nextMk) || 0) + clusterNudgePx);
+          } else if (gapPx < 30) {
+            nudgeMap.set(currentMk, (nudgeMap.get(currentMk) || 0) - pairNudgePx);
+            nudgeMap.set(nextMk, (nudgeMap.get(nextMk) || 0) + pairNudgePx);
           }
         }
 
         lineMarkers.forEach(function (mk) {
+          mk.classList.remove("mk--compact");
+          mk.classList.remove("mk--dense");
+          mk.classList.remove("mk--tight");
+          mk.classList.remove("is-edge-left");
+          mk.classList.remove("is-edge-right");
+          mk.classList.remove("mk--below");
+          mk.classList.add("mk--above");
+          mk.style.setProperty("--mk-nudge", (nudgeMap.get(mk) || 0) + "px");
+          mk.style.setProperty("--mk-label-offset", labelOffset + "px");
+          mk.style.setProperty("--mk-line-size", "0px");
+
+          var labelEl = mk.querySelector(".mk__label");
+          if (labelEl) {
+            labelEl.removeAttribute("hidden");
+            labelEl.removeAttribute("aria-hidden");
+          }
+
           var left = parseFloat((mk.style.left || "0").replace("%", "")) || 0;
           if (left <= 6) {
             mk.classList.add("is-edge-left");
           } else if (left >= 94) {
             mk.classList.add("is-edge-right");
           }
-          mk.style.setProperty("--mk-nudge", (nudgeMap.get(mk) || 0) + "px");
         });
       });
     }
@@ -408,18 +400,26 @@
       });
     }
 
+    function normalizeTimelineYearLabel(html) {
+      return String(html || "")
+        .replace(/(\d{3,4})\.(?=\s*(?:&ndash;|&#8211;|–|-))/g, "$1")
+        .replace(/(\d{3,4})\.(?=\s*(?:<br\s*\/?>|<\/span>|$))/g, "$1");
+    }
+
     syncToplineOffset();
     markers.forEach(function (mk) {
       var label = mk.querySelector(".mk__label");
       if (!label) {
         return;
       }
+      label.innerHTML = normalizeTimelineYearLabel(label.innerHTML);
     });
     steps.forEach(function (step) {
       var axisYear = step.querySelector(".vtimeline-step__axisYear");
       if (!axisYear) {
         return;
       }
+      axisYear.innerHTML = normalizeTimelineYearLabel(axisYear.innerHTML);
     });
     layoutToplineLabels();
     layoutDurationScaleLabels();
@@ -462,47 +462,150 @@
       }
     })();
 
-    function setActiveStep(id) {
-      steps.forEach(function (step) {
-        var info = step.querySelector("[data-info]");
-        var isActive = step.getAttribute("data-id") === id;
-        step.classList.toggle("is-active", isActive);
-
-        if (info) {
-          if (isActive) {
-            info.removeAttribute("hidden");
-          } else {
-            info.setAttribute("hidden", "");
-          }
-        }
-      });
+    function clamp(value, min, max) {
+      return Math.max(min, Math.min(max, value));
     }
 
-    function getViewportFocusY() {
+    function easeOut(value) {
+      return 1 - Math.pow(1 - value, 2);
+    }
+
+    function setStepVisualState(step, state) {
+      var info = step.querySelector("[data-info]");
+      var isActive = state.isActive;
+      var progress = clamp(state.progress || 0, 0, 1);
+      var readingProgress = clamp(state.readingProgress || 0, 0, 1);
+
+      step.classList.toggle("is-active", isActive);
+      step.classList.toggle("is-reading", isActive && readingProgress > 0.38);
+      step.style.setProperty("--timeline-step-progress", progress.toFixed(3));
+      step.style.setProperty("--timeline-reading-progress", readingProgress.toFixed(3));
+      step.style.setProperty("--timeline-icon-current", state.iconSize + "px");
+      step.style.setProperty("--timeline-icon-shift", state.iconShift + "px");
+
+      if (!info) {
+        return;
+      }
+      if (isActive) {
+        info.removeAttribute("hidden");
+      } else {
+        info.setAttribute("hidden", "");
+      }
+    }
+
+    function getStepSizing() {
+      if (window.matchMedia("(max-width: 900px)").matches) {
+        return {
+          base: 116,
+          focus: Math.min(window.innerWidth * 0.84, 320),
+          reading: Math.min(window.innerWidth * 0.58, 212),
+          shift: 4
+        };
+      }
+      return {
+        base: 218,
+        focus: Math.min(window.innerWidth * 0.34, 462),
+        reading: Math.min(window.innerWidth * 0.24, 312),
+        shift: 6
+      };
+    }
+
+    function getViewportStoryAnchorY() {
       var navH = parseInt(getComputedStyle(document.documentElement).getPropertyValue("--topline-offset"), 10) || 80;
       var toplineH = parseInt(getComputedStyle(document.documentElement).getPropertyValue("--topline-height"), 10) || 120;
       var visibleTop = navH + toplineH;
-      var visibleHeight = Math.max(120, window.innerHeight - visibleTop);
-      return visibleTop + (visibleHeight / 2);
+      return visibleTop + (window.matchMedia("(max-width: 900px)").matches ? 20 : 22);
     }
 
-    function findClosestStepToViewportCenter() {
-      var focusY = getViewportFocusY();
-      var bestStep = null;
-      var bestDistance = Infinity;
+    function getDocTop(step) {
+      var rect = step.getBoundingClientRect();
+      return window.scrollY + rect.top;
+    }
 
-      steps.forEach(function (step) {
-        var icon = step.querySelector(".vtimeline-step__icon");
-        var rect = icon ? icon.getBoundingClientRect() : step.getBoundingClientRect();
-        var centerY = rect.top + (rect.height / 2);
-        var distance = Math.abs(centerY - focusY);
-        if (distance < bestDistance) {
-          bestDistance = distance;
-          bestStep = step;
+    function getReadingDistance() {
+      return window.matchMedia("(max-width: 900px)").matches ? Math.round(window.innerHeight * 0.24) : Math.round(window.innerHeight * 0.28);
+    }
+
+    function getStepFocusTop(step) {
+      return Math.max(0, getDocTop(step) - getViewportStoryAnchorY());
+    }
+
+    function getStepReadingTop(index) {
+      var step = steps[index];
+      if (!step) {
+        return 0;
+      }
+      var focusTop = getStepFocusTop(step);
+      var nextStep = steps[index + 1];
+      var nextFocusTop = nextStep ? getStepFocusTop(nextStep) : focusTop + Math.round(window.innerHeight * 0.9);
+      return Math.max(focusTop, Math.min(focusTop + getReadingDistance(), nextFocusTop - 24));
+    }
+
+    function findActiveStepIndex(anchorDocY) {
+      var activeIndex = 0;
+      steps.forEach(function (step, index) {
+        if (getDocTop(step) <= anchorDocY) {
+          activeIndex = index;
         }
       });
+      return activeIndex;
+    }
 
-      return bestStep;
+    var currentActiveStepId = "";
+    var currentSnapIndex = 0;
+
+    function updateStepStatesFromScroll() {
+      syncToplineOffset();
+      var anchorViewportY = getViewportStoryAnchorY();
+      var anchorDocY = window.scrollY + anchorViewportY;
+      var activeIndex = findActiveStepIndex(anchorDocY);
+      var sizing = getStepSizing();
+      var activeStep = steps[activeIndex];
+      var activeId = activeStep ? activeStep.getAttribute("data-id") : "";
+
+      steps.forEach(function (step, index) {
+        var state = {
+          isActive: false,
+          progress: 0,
+          readingProgress: 0,
+          iconSize: sizing.base,
+          iconShift: 0
+        };
+
+        if (index === activeIndex) {
+          var focusTop = getStepFocusTop(step);
+          var readingTop = getStepReadingTop(index);
+          var currentTop = window.scrollY;
+          var phaseDistance = Math.max(1, readingTop - focusTop);
+          var rawProgress = clamp((currentTop - focusTop) / phaseDistance, 0, 1);
+          var approachProgress = clamp(rawProgress / 0.5, 0, 1);
+          var readingProgress = clamp((rawProgress - 0.5) / 0.5, 0, 1);
+          var easedApproach = easeOut(approachProgress);
+          var easedReading = easeOut(readingProgress);
+
+          state.isActive = true;
+          state.progress = rawProgress;
+          state.readingProgress = readingProgress;
+          if (rawProgress < 0.5) {
+            state.iconSize = sizing.base + ((sizing.focus - sizing.base) * easedApproach);
+            state.iconShift = sizing.shift * easedApproach;
+          } else {
+            state.iconSize = sizing.focus + ((sizing.reading - sizing.focus) * easedReading);
+            state.iconShift = sizing.shift * (1 - easedReading);
+          }
+        }
+
+        setStepVisualState(step, state);
+      });
+
+      if (activeId) {
+        setActiveMarker(activeId);
+        if (activeId !== currentActiveStepId) {
+          currentActiveStepId = activeId;
+          currentSnapIndex = activeIndex;
+          history.replaceState(null, "", "#" + activeId);
+        }
+      }
     }
 
     var syncActiveRaf = null;
@@ -512,75 +615,8 @@
       }
       syncActiveRaf = window.requestAnimationFrame(function () {
         syncActiveRaf = null;
-        var closest = findClosestStepToViewportCenter();
-        if (!closest) {
-          return;
-        }
-        var id = closest.getAttribute("data-id");
-        if (!id) {
-          return;
-        }
-        setActiveStep(id);
-        setActiveMarker(id);
+        updateStepStatesFromScroll();
       });
-    }
-
-    function closeStepLightbox() {
-      if (!lightbox || !lightboxOpen) {
-        return;
-      }
-      lightbox.setAttribute("hidden", "");
-      lightbox.setAttribute("aria-hidden", "true");
-      document.body.classList.remove("no-scroll");
-      if (lightboxImage) {
-        lightboxImage.setAttribute("src", "");
-      }
-      lightbox.style.removeProperty("--lb-panel-h");
-      lightboxOpen = false;
-    }
-
-    function updateLightboxLayoutVars() {
-      if (!lightbox || !lightboxOpen) {
-        return;
-      }
-      var panel = lightbox.querySelector(".vremeplov-lightbox__panel");
-      if (!panel) {
-        return;
-      }
-      var panelHeight = Math.ceil(panel.getBoundingClientRect().height || panel.offsetHeight || 0);
-      lightbox.style.setProperty("--lb-panel-h", Math.max(80, panelHeight) + "px");
-    }
-
-    function openStepLightbox(step, triggerBtn) {
-      if (!lightbox || !lightboxImage || !lightboxTitle || !lightboxDetail) {
-        return;
-      }
-      var img = step.querySelector(".vtimeline-step__image");
-      var title = step.querySelector(".infoBox__title");
-      var detail = step.querySelector(".infoBox p");
-      var era = step.querySelector(".infoBox__meta");
-      var dataImage = triggerBtn ? triggerBtn.getAttribute("data-lb-image") : "";
-      var dataTitle = triggerBtn ? triggerBtn.getAttribute("data-lb-title") : "";
-      var dataDetail = triggerBtn ? triggerBtn.getAttribute("data-lb-detail") : "";
-      var dataEra = triggerBtn ? triggerBtn.getAttribute("data-lb-era") : "";
-
-      if (!img && !dataImage) {
-        return;
-      }
-
-      lightboxImage.setAttribute("src", dataImage || img.getAttribute("src") || "");
-      lightboxImage.setAttribute("alt", dataTitle || (img ? img.getAttribute("alt") || "" : ""));
-      lightboxTitle.textContent = dataTitle || (title ? title.textContent || "" : "");
-      lightboxDetail.textContent = dataDetail || (detail ? detail.textContent || "" : "");
-      if (lightboxEra) {
-        lightboxEra.textContent = dataEra || (era ? era.textContent || "" : "");
-      }
-
-      lightbox.removeAttribute("hidden");
-      lightbox.setAttribute("aria-hidden", "false");
-      document.body.classList.add("no-scroll");
-      lightboxOpen = true;
-      window.requestAnimationFrame(updateLightboxLayoutVars);
     }
 
     function scrollToStep(id, behavior) {
@@ -589,21 +625,8 @@
         return;
       }
       syncToplineOffset();
-      var navH = parseInt(getComputedStyle(document.documentElement).getPropertyValue("--topline-offset"), 10) || 80;
-      var toplineH = parseInt(getComputedStyle(document.documentElement).getPropertyValue("--topline-height"), 10) || 120;
-      var visibleTop = navH + toplineH;
-      var visibleHeight = Math.max(120, window.innerHeight - visibleTop);
-      var desiredCenterY = visibleTop + (visibleHeight / 2);
-      var icon = step.querySelector(".vtimeline-step__icon");
-      var targetTop;
-
-      if (icon) {
-        var iconRect = icon.getBoundingClientRect();
-        var iconCenterDoc = window.scrollY + iconRect.top + (iconRect.height / 2);
-        targetTop = iconCenterDoc - desiredCenterY;
-      } else {
-        targetTop = window.scrollY + step.getBoundingClientRect().top - visibleTop - 6;
-      }
+      var anchorY = getViewportStoryAnchorY();
+      var targetTop = window.scrollY + step.getBoundingClientRect().top - anchorY;
 
       window.scrollTo({
         top: Math.max(0, targetTop),
@@ -619,14 +642,19 @@
       if (!targetStep) {
         return;
       }
-
-      closeStepLightbox();
+      var targetIndex = steps.findIndex(function (step) {
+        return step.getAttribute("data-id") === id;
+      });
+      if (targetIndex !== -1) {
+        currentSnapIndex = targetIndex;
+      }
       history.replaceState(null, "", "#" + id);
       if (shouldScroll) {
-        scrollToStep(id, "auto");
+        scrollToStep(id, "smooth");
+      } else {
+        updateStepStatesFromScroll();
       }
-      setActiveStep(id);
-      setActiveMarker(id);
+      updateStepStatesFromScroll();
       scheduleToplineConnectorsLayout();
     }
 
@@ -638,140 +666,90 @@
         activateStepById(mk.getAttribute("data-target"), true);
         return;
       }
-
-      var iconBtn = event.target.closest(".vtimeline-step__icon");
-      if (iconBtn) {
-        event.preventDefault();
-        var parentStep = iconBtn.closest(".vtimeline-step[data-id]");
-        if (parentStep) {
-          var stepId = parentStep.getAttribute("data-id");
-          activateStepById(stepId, false);
-          openStepLightbox(parentStep, iconBtn);
-        }
-      }
     });
 
-    if (lightbox) {
-      var lightboxPanel = lightbox.querySelector("[data-vremeplov-lightbox-panel]");
-      if (lightboxPanel) {
-        lightboxPanel.addEventListener("click", function (event) {
-          event.stopPropagation();
-        });
-      }
-      lightbox.addEventListener("click", function () {
-        closeStepLightbox();
-      });
-      document.addEventListener("keydown", function (event) {
-        if (event.key === "Escape") {
-          closeStepLightbox();
-        }
-      });
-      window.addEventListener("resize", function () {
-        updateLightboxLayoutVars();
-      }, { passive: true });
-    }
-
-    window.addEventListener("hashchange", function () {
-      var id = (window.location.hash || "").replace("#", "");
-      if (!id) {
-        return;
-      }
-      activateStepById(id, false);
-    });
-
-    var observer = new IntersectionObserver(function (entries) {
-      var visible = entries
-        .filter(function (entry) { return entry.isIntersecting; })
-        .sort(function (a, b) { return b.intersectionRatio - a.intersectionRatio; })[0];
-
-      if (!visible) {
-        return;
-      }
-
-      var id = visible.target.getAttribute("data-id");
-      if (id) {
-        setActiveStep(id);
-        setActiveMarker(id);
-        history.replaceState(null, "", "#" + id);
-      }
-    }, {
-      root: null,
-      threshold: [0.35, 0.6, 0.8],
-      rootMargin: "-10% 0px -10% 0px"
-    });
-
-    steps.forEach(function (step) {
-      observer.observe(step);
-    });
-
-    var wheelLocked = false;
     function shouldUseStepSnapNavigation() {
-      return window.matchMedia("(min-width: 901px)").matches;
+      return true;
     }
 
     function getActiveIndex() {
-      var idx = steps.findIndex(function (step) {
-        return step.classList.contains("is-active");
-      });
-      if (idx !== -1) {
-        return idx;
+      if (currentSnapIndex >= 0 && currentSnapIndex < steps.length) {
+        return currentSnapIndex;
       }
-      var bestIdx = 0;
-      var bestDist = Infinity;
-      var anchor = (parseInt(getComputedStyle(document.documentElement).getPropertyValue("--topline-offset"), 10) || 80) +
-        (parseInt(getComputedStyle(document.documentElement).getPropertyValue("--topline-height"), 10) || 120) + 24;
-      steps.forEach(function (step, index) {
-        var dist = Math.abs(step.getBoundingClientRect().top - anchor);
-        if (dist < bestDist) {
-          bestDist = dist;
-          bestIdx = index;
-        }
-      });
-      return bestIdx;
+      var anchorDocY = window.scrollY + getViewportStoryAnchorY();
+      return findActiveStepIndex(anchorDocY);
     }
 
-    window.addEventListener("wheel", function (event) {
-      if (!shouldUseStepSnapNavigation()) {
-        return;
-      }
-      if (wheelLocked) {
-        event.preventDefault();
-        return;
-      }
-      if (Math.abs(event.deltaY) < 8) {
-        return;
-      }
+    var wheelLocked = false;
+    var wheelDeltaBuffer = 0;
+    function lockWheelTemporarily() {
+      wheelLocked = true;
+      wheelDeltaBuffer = 0;
+      window.setTimeout(function () {
+        wheelLocked = false;
+      }, 560);
+    }
 
-      var timelineRect = page.querySelector(".vtimeline").getBoundingClientRect();
-      var inTimeline = timelineRect.top < window.innerHeight * 0.85 && timelineRect.bottom > window.innerHeight * 0.2;
-      if (!inTimeline) {
-        return;
-      }
-
+    function jumpToAdjacentStep(direction) {
       var currentIndex = getActiveIndex();
-      var nextIndex = event.deltaY > 0 ? currentIndex + 1 : currentIndex - 1;
-      nextIndex = Math.max(0, Math.min(steps.length - 1, nextIndex));
-
+      var nextIndex = clamp(currentIndex + direction, 0, steps.length - 1);
       if (nextIndex === currentIndex) {
         return;
       }
 
-      event.preventDefault();
-      var nextId = steps[nextIndex].getAttribute("data-id");
-      if (!nextId) {
+      currentSnapIndex = nextIndex;
+      var targetTop = getStepFocusTop(steps[nextIndex]);
+
+      window.scrollTo({
+        top: Math.max(0, targetTop),
+        behavior: "smooth"
+      });
+      scheduleActiveSyncFromViewport();
+      lockWheelTemporarily();
+    }
+
+    function isWithinTimelineStory() {
+      var firstStep = steps[0];
+      var lastStep = steps[steps.length - 1];
+      if (!firstStep || !lastStep) {
+        return false;
+      }
+      var startY = getDocTop(firstStep) - window.innerHeight * 0.2;
+      var endY = getDocTop(lastStep) + lastStep.offsetHeight - window.innerHeight * 0.55;
+      return window.scrollY >= startY && window.scrollY <= endY;
+    }
+
+    function handleTimelineWheel(event) {
+      if (!shouldUseStepSnapNavigation()) {
+        return;
+      }
+      if (event.target && (event.target.closest(".infoBox") || event.target.closest(".topline__scroller"))) {
+        wheelDeltaBuffer = 0;
+        return;
+      }
+      if (!isWithinTimelineStory()) {
+        wheelDeltaBuffer = 0;
         return;
       }
 
-      wheelLocked = true;
-      scrollToStep(nextId);
-      setActiveStep(nextId);
-      setActiveMarker(nextId);
-      history.replaceState(null, "", "#" + nextId);
+      // Within the timeline story we suppress native page scrolling and
+      // only advance once the accumulated gesture is strong enough.
+      event.preventDefault();
 
-      setTimeout(function () {
-        wheelLocked = false;
-      }, 520);
-    }, { passive: false });
+      if (wheelLocked) {
+        return;
+      }
+
+      wheelDeltaBuffer += event.deltaY;
+      if (Math.abs(wheelDeltaBuffer) < 60) {
+        return;
+      }
+
+      jumpToAdjacentStep(wheelDeltaBuffer > 0 ? 1 : -1);
+      wheelDeltaBuffer = 0;
+    }
+
+    document.addEventListener("wheel", handleTimelineWheel, { passive: false, capture: true });
 
     var touchStartY = null;
     var touchStartX = null;
@@ -801,52 +779,43 @@
       touchStartX = null;
       touchStartY = null;
 
-      if (Math.abs(deltaY) < 45 || Math.abs(deltaY) <= Math.abs(deltaX) * 1.2) {
+      if (Math.abs(deltaY) < 48 || Math.abs(deltaY) <= Math.abs(deltaX) * 1.15) {
         return;
       }
-      if (touch.target && touch.target.closest(".topline__scroller")) {
+      if (touch.target && (touch.target.closest(".infoBox") || touch.target.closest(".topline__scroller"))) {
         return;
       }
-
-      var timelineRect = page.querySelector(".vtimeline").getBoundingClientRect();
-      var inTimeline = timelineRect.top < window.innerHeight * 0.85 && timelineRect.bottom > window.innerHeight * 0.2;
-      if (!inTimeline) {
+      if (!isWithinTimelineStory()) {
         return;
       }
 
-      var currentIndex = getActiveIndex();
-      var nextIndex = deltaY < 0 ? currentIndex + 1 : currentIndex - 1;
-      nextIndex = Math.max(0, Math.min(steps.length - 1, nextIndex));
-      if (nextIndex === currentIndex) {
-        return;
-      }
-
-      var nextId = steps[nextIndex].getAttribute("data-id");
-      if (!nextId) {
-        return;
-      }
-
-      wheelLocked = true;
-      scrollToStep(nextId);
-      setActiveStep(nextId);
-      setActiveMarker(nextId);
-      history.replaceState(null, "", "#" + nextId);
-      setTimeout(function () {
-        wheelLocked = false;
-      }, 520);
+      jumpToAdjacentStep(deltaY < 0 ? 1 : -1);
     }, { passive: true });
+
+    window.addEventListener("hashchange", function () {
+      var id = (window.location.hash || "").replace("#", "");
+      if (!id) {
+        return;
+      }
+      activateStepById(id, false);
+    });
 
     (function initFromHash() {
       var id = (window.location.hash || "").replace("#", "");
       if (id) {
+        var hashIndex = steps.findIndex(function (step) {
+          return step.getAttribute("data-id") === id;
+        });
+        if (hashIndex !== -1) {
+          currentSnapIndex = hashIndex;
+        }
         scrollToStep(id, "auto");
-        setActiveStep(id);
-        setActiveMarker(id);
       } else if (markers[0]) {
         var firstId = markers[0].getAttribute("data-target");
-        window.scrollTo({ top: 0, behavior: "auto" });
-        setActiveStep(firstId);
-        setActiveMarker(firstId);
+        var firstStep = document.getElementById(firstId);
+        currentSnapIndex = 0;
+        window.scrollTo({ top: Math.max(0, firstStep ? getStepFocusTop(firstStep) : 0), behavior: "auto" });
+        history.replaceState(null, "", "#" + firstId);
       }
       setTimeout(function () {
         syncToplineOffset();
