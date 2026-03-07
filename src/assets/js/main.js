@@ -148,6 +148,25 @@
       return;
     }
 
+    function normalizeInfoBoxTitleMain(rawTitle) {
+      if (!rawTitle) {
+        return "";
+      }
+      return rawTitle.replace(/\s+[–-]\s+.+$/, "").trim();
+    }
+
+    steps.forEach(function (step) {
+      var titleMainEl = step.querySelector(".infoBox__title-main");
+      var subtitleEl = step.querySelector(".infoBox__subtitle");
+      if (!titleMainEl || !subtitleEl) {
+        return;
+      }
+      var cleaned = normalizeInfoBoxTitleMain(titleMainEl.textContent || "");
+      if (cleaned) {
+        titleMainEl.textContent = cleaned;
+      }
+    });
+
     var lastToplineHeight = 120;
 
     function syncToplineOffset() {
@@ -176,7 +195,6 @@
       document.documentElement.style.setProperty("--topline-height", toplineHeight + "px");
     }
 
-    var CONNECTOR_STEP_Y = 5;
     var connectorRaf = null;
     var connectorResizeObserver = null;
 
@@ -191,7 +209,7 @@
     }
 
     function layoutToplineConnectors() {
-      var toplineContainer = page.querySelector(".timelineSticky .container-large-2") || page.querySelector(".topline .container-large-2");
+      var toplineContainer = page.querySelector(".timelineSticky .topline .container-large-2") || page.querySelector(".topline .container-large-2");
       if (!toplineContainer) {
         return;
       }
@@ -243,8 +261,12 @@
       }
 
       var lanes = segmentEls.length;
-      var total = (lanes - 1) * CONNECTOR_STEP_Y;
-      var y0 = Math.round((busHeight - total) / 2);
+      // Keep lane spacing even, but reserve bottom inset so the last
+      // connector does not sit too close to the segment box (purple vs red).
+      var yTopInset = 12;
+      var yBottomInset = 16;
+      var laneSpan = Math.max(1, busHeight - yTopInset - yBottomInset);
+      var laneStep = lanes > 1 ? laneSpan / (lanes - 1) : 0;
 
       segmentEls.forEach(function (segmentEl, index) {
         var segKey = segmentEl.getAttribute("data-seg") || "";
@@ -258,16 +280,31 @@
 
         var blockRect = segmentEl.getBoundingClientRect();
         var topRect = durationEl.getBoundingClientRect();
+        // Keep authored segment widths from template/CSS in both modes.
+        segmentEl.style.removeProperty("--seg-ratio");
 
         var xTop = topRect.left + (topRect.width / 2) - busRect.left;
         var xBlock = blockRect.left + (blockRect.width / 2) - busRect.left;
-        var yLane = y0 + (index * CONNECTOR_STEP_Y);
+        var yLane = Math.round(yTopInset + (index * laneStep));
 
-        var d = "M " + xTop + " 0" +
-          " L " + xTop + " " + yLane +
+        var d = "M " + xBlock + " " + busHeight +
           " L " + xBlock + " " + yLane +
-          " L " + xBlock + " " + busHeight;
+          " L " + xTop + " " + yLane +
+          " L " + xTop + " 0";
 
+        // Inline stroke attributes keep connectors visible even if a global CSS rule
+        // accidentally overrides SVG path styling.
+        var varName = "--seg-" + segKey;
+        var resolvedStroke = window.getComputedStyle(document.documentElement).getPropertyValue(varName).trim();
+        if (!resolvedStroke) {
+          resolvedStroke = "rgba(92, 96, 104, 0.9)";
+        }
+        pathEl.setAttribute("fill", "none");
+        pathEl.setAttribute("stroke", resolvedStroke);
+        pathEl.setAttribute("stroke-width", "2.2");
+        pathEl.setAttribute("stroke-linecap", "round");
+        pathEl.setAttribute("stroke-linejoin", "round");
+        pathEl.setAttribute("opacity", "1");
         pathEl.setAttribute("d", d);
       });
     }
@@ -433,7 +470,7 @@
     window.addEventListener("scroll", scheduleActiveSyncFromViewport, { passive: true });
 
     (function setupToplineConnectorObservers() {
-      var toplineContainer = page.querySelector(".timelineSticky .container-large-2") || page.querySelector(".topline .container-large-2");
+      var toplineContainer = page.querySelector(".timelineSticky .topline .container-large-2") || page.querySelector(".topline .container-large-2");
       if (!toplineContainer) {
         return;
       }
@@ -505,7 +542,7 @@
       return {
         transitionMs: reduced ? 120 : 1200,
         lockMs: reduced ? 120 : 1200,
-        wheelThreshold: 8,
+        wheelThreshold: 1,
         swipeThreshold: 28
       };
     }
@@ -699,6 +736,7 @@
         activateStepById(mk.getAttribute("data-target"), true, true);
         return;
       }
+
     });
 
     function shouldUseStepSnapNavigation() {
@@ -734,7 +772,7 @@
       if (!shouldUseStepSnapNavigation()) {
         return;
       }
-      if (event.target && (event.target.closest(".infoBox") || event.target.closest(".topline__scroller"))) {
+      if (event.target && event.target.closest(".infoBox")) {
         return;
       }
       if (!isWithinTimelineStory()) {
@@ -749,7 +787,7 @@
         return;
       }
 
-      if (Math.abs(event.deltaY) < getTimelineConfig().wheelThreshold) {
+      if (Math.abs(event.deltaY) < getTimelineConfig().wheelThreshold || event.deltaY === 0) {
         return;
       }
 
@@ -788,7 +826,7 @@
       if (Math.abs(deltaY) < swipeThreshold || Math.abs(deltaY) <= Math.abs(deltaX) * 1.05) {
         return;
       }
-      if (touch.target && (touch.target.closest(".infoBox") || touch.target.closest(".topline__scroller"))) {
+      if (touch.target && touch.target.closest(".infoBox")) {
         return;
       }
       if (!isWithinTimelineStory()) {
