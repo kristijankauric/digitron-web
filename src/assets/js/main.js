@@ -524,7 +524,6 @@
     window.addEventListener("resize", layoutDurationScaleLabels, { passive: true });
     window.addEventListener("resize", scheduleToplineConnectorsLayout, { passive: true });
     window.addEventListener("resize", scheduleActiveSyncFromViewport, { passive: true });
-    window.addEventListener("scroll", scheduleActiveSyncFromViewport, { passive: true });
 
     (function setupToplineConnectorObservers() {
       var toplineContainer = page.querySelector(".timelineSticky .topline .container-large-2") || page.querySelector(".topline .container-large-2");
@@ -590,6 +589,7 @@
     var timelineState = "idle";
     var currentSnapIndex = 0;
     var transitionTimers = [];
+    var transitionEpoch = 0;
     var touchStartY = null;
     var touchStartX = null;
     var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -597,8 +597,8 @@
     function getTimelineConfig() {
       var reduced = reduceMotion.matches;
       return {
-        transitionMs: reduced ? 120 : 1200,
-        lockMs: reduced ? 120 : 1200,
+        transitionMs: reduced ? 120 : 300,
+        lockMs: reduced ? 140 : 320,
         wheelThreshold: 1,
         swipeThreshold: 28
       };
@@ -682,16 +682,20 @@
       });
     }
 
-    function scrollWindowToStep(index) {
+    function scrollWindowToStep(index, useSmooth) {
       var step = steps[index];
       if (!step) {
         return;
       }
       syncToplineOffset();
       var targetTop = getStepFocusTop(step);
+      var behavior = "auto";
+      if (!reduceMotion.matches && useSmooth !== false) {
+        behavior = "smooth";
+      }
       window.scrollTo({
         top: Math.max(0, targetTop),
-        behavior: "auto"
+        behavior: behavior
       });
     }
 
@@ -705,12 +709,12 @@
       updatePageState();
       window.scrollTo({
         top: Math.max(0, footerTop),
-        behavior: "smooth"
+        behavior: reduceMotion.matches ? "auto" : "smooth"
       });
       window.setTimeout(function () {
         timelineState = "idle";
         updatePageState();
-      }, Math.max(320, getTimelineConfig().lockMs));
+      }, Math.max(240, getTimelineConfig().lockMs));
     }
 
     function animateToIndex(targetIndex, options) {
@@ -720,8 +724,10 @@
       if (nextIndex === prevIndex && !opts.force) {
         return;
       }
-      if (timelineState === "animating" && !opts.force) {
-        return;
+      if (timelineState === "animating") {
+        clearTransitionTimers();
+        resetTransientClasses();
+        transitionEpoch += 1;
       }
 
       clearTransitionTimers();
@@ -730,6 +736,7 @@
       updatePageState();
 
       var config = getTimelineConfig();
+      var epoch = ++transitionEpoch;
       var outgoingStep = steps[prevIndex];
       var incomingStep = steps[nextIndex];
       if (outgoingStep && outgoingStep !== incomingStep) {
@@ -741,19 +748,28 @@
 
       currentSnapIndex = nextIndex;
       commitStep(nextIndex, opts.updateHash !== false);
-      scrollWindowToStep(nextIndex);
+      scrollWindowToStep(nextIndex, true);
 
       if (incomingStep) {
         transitionTimers.push(window.setTimeout(function () {
+          if (epoch !== transitionEpoch || currentSnapIndex !== nextIndex) {
+            return;
+          }
           incomingStep.classList.add("is-text-bg-in");
-        }, Math.min(60, config.transitionMs)));
+        }, Math.min(24, config.transitionMs)));
 
         transitionTimers.push(window.setTimeout(function () {
+          if (epoch !== transitionEpoch || currentSnapIndex !== nextIndex) {
+            return;
+          }
           incomingStep.classList.add("is-text-content-in");
-        }, Math.min(180, config.transitionMs)));
+        }, Math.min(80, config.transitionMs)));
       }
 
       transitionTimers.push(window.setTimeout(function () {
+        if (epoch !== transitionEpoch || currentSnapIndex !== nextIndex) {
+          return;
+        }
         resetTransientClasses();
         timelineState = "idle";
         updatePageState();
@@ -775,7 +791,7 @@
         resetTransientClasses();
         timelineState = "idle";
         commitStep(targetIndex, shouldSetHash !== false);
-        scrollWindowToStep(targetIndex);
+        scrollWindowToStep(targetIndex, false);
         updatePageState();
         return;
       }
@@ -787,9 +803,6 @@
       if (mk) {
         event.preventDefault();
         event.stopPropagation();
-        if (timelineState === "animating") {
-          return;
-        }
         activateStepById(mk.getAttribute("data-target"), true, true);
         return;
       }
@@ -801,9 +814,6 @@
     }
 
     function jumpToAdjacentStep(direction) {
-      if (timelineState === "animating") {
-        return;
-      }
       var nextIndex = clamp(currentSnapIndex + direction, 0, steps.length - 1);
       if (nextIndex === currentSnapIndex) {
         if (direction > 0 && currentSnapIndex === steps.length - 1) {
@@ -811,7 +821,7 @@
         }
         return;
       }
-      animateToIndex(nextIndex, { updateHash: true });
+      animateToIndex(nextIndex, { updateHash: true, force: timelineState === "animating" });
     }
 
     function isWithinTimelineStory() {
@@ -820,7 +830,7 @@
       if (!firstStep || !lastStep) {
         return false;
       }
-      var startY = getDocTop(firstStep) - window.innerHeight * 0.2;
+      var startY = getDocTop(firstStep) - window.innerHeight * 0.75;
       var endY = getDocTop(lastStep) + lastStep.offsetHeight - window.innerHeight * 0.55;
       return window.scrollY >= startY && window.scrollY <= endY;
     }
@@ -839,10 +849,6 @@
       // Within the timeline story we suppress native page scrolling and
       // only advance once the accumulated gesture is strong enough.
       event.preventDefault();
-
-      if (timelineState === "animating") {
-        return;
-      }
 
       if (Math.abs(event.deltaY) < getTimelineConfig().wheelThreshold || event.deltaY === 0) {
         return;
@@ -867,7 +873,7 @@
         touchStartY = null;
         return;
       }
-      if (timelineState === "animating" || touchStartY === null || touchStartX === null || !event.changedTouches || event.changedTouches.length !== 1) {
+      if (touchStartY === null || touchStartX === null || !event.changedTouches || event.changedTouches.length !== 1) {
         touchStartX = null;
         touchStartY = null;
         return;
@@ -896,9 +902,6 @@
     window.addEventListener("hashchange", function () {
       var id = (window.location.hash || "").replace("#", "");
       if (!id) {
-        return;
-      }
-      if (timelineState === "animating") {
         return;
       }
       activateStepById(id, true, false);

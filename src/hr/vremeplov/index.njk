@@ -66,6 +66,8 @@ useTimelineStyles: true
                 {% set left = rawLeft %}
                 {% if left < 4 %}{% set left = 4 %}{% endif %}
                 {% if left > 96 %}{% set left = 96 %}{% endif %}
+                {% if segment.key == 'premechanical' and event.id == 't-3000bc-meso' and left > 92 %}{% set left = 92 %}{% endif %}
+                {% if segment.key == 'premechanical' and event.id == 't-2500bc' %}{% set left = 96 %}{% endif %}
                 {% if event.yearSort == segment.fromYear %}{% set left = 0 %}{% endif %}
                 {% if event.yearSort == segment.toYear and segment.key != 'premechanical' %}{% set left = 100 %}{% endif %}
                 {% endif %}

@@ -3,7 +3,7 @@ name: Deploy Eleventy to GitHub Pages
 on:
   push:
     branches:
-      - feature/timeline-fix   # <-- OVDJE upiši točan naziv brancha koji želiš deployati
+      - novi-vremeplov
 
 permissions:
   contents: read
