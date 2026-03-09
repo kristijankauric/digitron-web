@@ -67,6 +67,7 @@ useTimelineStyles: true
                 {% if left < 4 %}{% set left = 4 %}{% endif %}
                 {% if left > 96 %}{% set left = 96 %}{% endif %}
                 {% if event.yearSort == segment.fromYear %}{% set left = 0 %}{% endif %}
+                {% if event.yearSort == segment.toYear and segment.key != 'premechanical' %}{% set left = 100 %}{% endif %}
                 {% endif %}
                 {% set markerLabel = event.toplineLabelHtml or event.yearLabel %}
                 {% set isMechanicalStart = segment.key == 'mechanical' and event.yearSort == segment.fromYear %}
@@ -128,7 +129,7 @@ useTimelineStyles: true
                   <span class="infoBox__meta">{{ event.era }}</span>
                 </div>
                 {% set titleMain = event.title %}
-                {% if event.subtitle %}{% set titleMain = event.title | replace(" – " ~ event.subtitle, "") | replace(" - " ~ event.subtitle, "") %}{% endif %}
+                {% if event.subtitle %}{% set titleMain = event.title | replace(" � " ~ event.subtitle, "") | replace(" – " ~ event.subtitle, "") | replace(" - " ~ event.subtitle, "") %}{% endif %}
                 <h2 class="infoBox__title"><span class="infoBox__title-main">{{ titleMain }}</span>{% if event.subtitle %}<span class="infoBox__subtitle">{{ event.subtitle }}</span>{% endif %}</h2>
                 <p class="infoBox__body">{{ event.detail }}</p>
                 {% if event.isFeatured and event.ctaHref and event.ctaLabel %}

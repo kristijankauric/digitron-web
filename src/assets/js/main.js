@@ -1,4 +1,4 @@
-ï»¿(function () {
+(function () {
   "use strict";
 
   function ready(fn) {
@@ -148,11 +148,20 @@
       return;
     }
 
-    function normalizeInfoBoxTitleMain(rawTitle) {
+    function normalizeInfoBoxTitleMain(rawTitle, rawSubtitle) {
       if (!rawTitle) {
         return "";
       }
-      return rawTitle.replace(/\s+[â€“-]\s+.+$/, "").trim();
+      var title = String(rawTitle).trim();
+      var subtitle = String(rawSubtitle || "").trim();
+      if (subtitle) {
+        var escapedSubtitle = subtitle.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+        title = title.replace(new RegExp("\\s*(?:–|-|â€“)\\s*" + escapedSubtitle + "$", "i"), "").trim();
+        if (title.toLowerCase().endsWith(subtitle.toLowerCase())) {
+          title = title.slice(0, title.length - subtitle.length).replace(/\s*(?:–|-|â€“)?\s*$/, "").trim();
+        }
+      }
+      return title.replace(/\s+(?:–|-|â€“)\s+.+$/, "").trim();
     }
 
     steps.forEach(function (step) {
@@ -161,7 +170,7 @@
       if (!titleMainEl || !subtitleEl) {
         return;
       }
-      var cleaned = normalizeInfoBoxTitleMain(titleMainEl.textContent || "");
+      var cleaned = normalizeInfoBoxTitleMain(titleMainEl.textContent || "", subtitleEl.textContent || "");
       if (cleaned) {
         titleMainEl.textContent = cleaned;
       }
@@ -263,8 +272,8 @@
       var lanes = segmentEls.length;
       // Keep lane spacing even, but reserve bottom inset so the last
       // connector does not sit too close to the segment box (purple vs red).
-      var yTopInset = 12;
-      var yBottomInset = 16;
+      var yTopInset = 8;
+      var yBottomInset = 10;
       var laneSpan = Math.max(1, busHeight - yTopInset - yBottomInset);
       var laneStep = lanes > 1 ? laneSpan / (lanes - 1) : 0;
 
@@ -322,6 +331,7 @@
       var labelOffset = isMobile ? -28 : -32;
       var pairNudgePx = isMobile ? 8 : 12;
       var clusterNudgePx = isMobile ? 14 : 18;
+      var special1971PairNudgePx = isMobile ? 2 : 4;
 
       lines.forEach(function (line) {
         var lineMarkers = Array.prototype.slice.call(line.querySelectorAll(".mk[data-target]"));
@@ -340,6 +350,15 @@
           var currentLeftPx = ((parseFloat((currentMk.style.left || "0").replace("%", "")) || 0) / 100) * lineWidth;
           var nextLeftPx = ((parseFloat((nextMk.style.left || "0").replace("%", "")) || 0) / 100) * lineWidth;
           var gapPx = Math.abs(nextLeftPx - currentLeftPx);
+          var currentId = currentMk.getAttribute("data-target") || "";
+          var nextId = nextMk.getAttribute("data-target") || "";
+          var is1971Pair = (currentId === "t-1971-micro" && nextId === "t-1971-digitron") ||
+            (currentId === "t-1971-digitron" && nextId === "t-1971-micro");
+          if (is1971Pair) {
+            nudgeMap.set(currentMk, (nudgeMap.get(currentMk) || 0) - special1971PairNudgePx);
+            nudgeMap.set(nextMk, (nudgeMap.get(nextMk) || 0) + special1971PairNudgePx);
+            continue;
+          }
           if (gapPx < 18) {
             nudgeMap.set(currentMk, (nudgeMap.get(currentMk) || 0) - clusterNudgePx);
             nudgeMap.set(nextMk, (nudgeMap.get(nextMk) || 0) + clusterNudgePx);
@@ -350,6 +369,10 @@
         }
 
         lineMarkers.forEach(function (mk) {
+          var mkId = mk.getAttribute("data-target") || "";
+          if (mkId === "t-1961") {
+            nudgeMap.set(mk, (nudgeMap.get(mk) || 0) - (isMobile ? 5 : 8));
+          }
           mk.classList.remove("mk--compact");
           mk.classList.remove("mk--dense");
           mk.classList.remove("mk--tight");
@@ -407,7 +430,7 @@
 
           var count = cluster.length;
           var xStep = 12;
-          var yStep = 10;
+          var yStep = 6;
           cluster.forEach(function (label, idx) {
             var xNudge = (idx - ((count - 1) / 2)) * xStep;
             var yNudge = (idx % 2) * yStep;
@@ -440,7 +463,7 @@
 
     function normalizeTimelineYearLabel(html) {
       return String(html || "")
-        .replace(/(\d{3,4})\.(?=\s*(?:&ndash;|&#8211;|â€“|-))/g, "$1")
+        .replace(/(\d{3,4})\.(?=\s*(?:&ndash;|&#8211;|–|-))/g, "$1")
         .replace(/(\d{3,4})\.(?=\s*(?:<br\s*\/?>|<\/span>|$))/g, "$1");
     }
 
@@ -467,7 +490,7 @@
         if (!raw) {
           return;
         }
-        var parts = raw.split(/\s*[â€“-]\s*/);
+        var parts = raw.split(/\s*[–-]\s*/);
         if (parts.length >= 2) {
           var left = parts[0].trim();
           var right = parts.slice(1).join(" - ").trim();

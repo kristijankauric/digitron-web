@@ -65,7 +65,7 @@
 
 .timelineSticky .topline__bus {
   display: block !important;
-  height: 52px;
+  height: 44px;
 }
 
 .timelineSticky .topline__connector {
@@ -91,7 +91,7 @@
   display: flex;
   flex-direction: column;
   position: relative;
-  padding-top: 14px;
+  padding-top: 10px;
 }
 
 .topline__durationBar {
@@ -119,9 +119,9 @@
 
 .topline__durationScale {
   position: relative;
-  min-height: 30px;
-  margin-bottom: 4px;
-  transform: translateY(-10px);
+  min-height: 26px;
+  margin-bottom: 2px;
+  transform: translateY(-8px);
 }
 
 .durationScale__label {
@@ -130,8 +130,9 @@
   position: absolute;
   top: 0;
   transform: translate(calc(-50% + var(--nudge-x)), var(--nudge-y));
-  font-size: 10px;
+  font-size: 11px;
   line-height: 1;
+  font-weight: 600;
   opacity: 0.82;
   white-space: nowrap;
 }
@@ -148,9 +149,9 @@
   content: "";
   position: absolute;
   left: 50%;
-  top: calc(100% + 6px);
+  top: calc(100% + 4px);
   width: 1px;
-  height: 8px;
+  height: 6px;
   transform: translateX(-50%);
   background: rgba(80, 80, 80, 0.55);
 }
@@ -181,7 +182,7 @@
   left: 50%;
   top: 100%;
   width: 1px;
-  height: 8px;
+  height: 6px;
   transform: translateX(-50%);
   background: rgba(116, 116, 116, 0.45);
 }
@@ -226,9 +227,9 @@
   flex: var(--seg-ratio, 1) 1 0;
   min-width: 0;
   border-radius: 12px;
-  padding: 8px 10px 28px;
+  padding: 7px 10px 24px;
   position: relative;
-  min-height: 122px;
+  min-height: 114px;
   display: flex;
   flex-direction: column;
 }
@@ -240,8 +241,8 @@
   gap: 10px;
   font-size: 13px;
   opacity: 0.9;
-  margin-bottom: 6px;
-  min-height: 22px;
+  margin-bottom: 2px;
+  min-height: 20px;
 }
 
 .seg__head--ghost {
@@ -272,8 +273,8 @@
 
 .seg__line {
   position: relative;
-  height: 54px;
-  margin-top: 4px;
+  height: 50px;
+  margin-top: 2px;
   flex: 0 0 auto;
 }
 
@@ -325,7 +326,7 @@
   position: absolute;
   left: 50%;
   bottom: calc(100% + 16px);
-  font-size: 14px;
+  font-size: 11px;
   opacity: 0;
   white-space: nowrap;
   max-width: none;
@@ -344,11 +345,11 @@
 }
 
 .mk--dense .mk__label {
-  font-size: 10px;
+  font-size: 11px;
 }
 
 .mk--tight .mk__label {
-  font-size: 9.9px;
+  font-size: 11px;
 }
 
 .mk--hidden-label .mk__label {
@@ -393,18 +394,18 @@
 }
 
 .mk--compact .mk__label {
-  font-size: 9.9px;
+  font-size: 11px;
 }
 
 .mk--vertical-label .mk__label {
-  font-size: 9.9px;
+  font-size: 11px;
 }
 
 .seg__range {
   position: absolute;
   left: 10px;
   right: 10px;
-  bottom: 8px;
+  bottom: 6px;
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
@@ -443,7 +444,7 @@
 
 .seg__range-sub {
   display: block;
-  font-size: 10px;
+  font-size: 11px;
   line-height: 1;
   text-align: center;
 }
@@ -532,6 +533,8 @@
   box-shadow: none;
   border-radius: 0;
   overflow: visible;
+  position: relative;
+  z-index: 30;
   padding: 8px 0 6px;
 }
 
@@ -549,7 +552,16 @@
 }
 
 .mk[data-target="t-35000bc"] .mk__label {
-  font-size: 9px;
+  font-size: 11px;
+}
+
+.mk[data-target="t-850-alkh"] {
+  z-index: 40;
+}
+
+.mk[data-target="t-850-alkh"] .mk__label {
+  bottom: calc(100% + 22px);
+  z-index: 45;
 }
 
 .vtimeline {
@@ -642,17 +654,18 @@
   top: 50%;
   left: calc(50% - (var(--vt-icon-size) / 2) - var(--timeline-side-gap) - (var(--timeline-side-width) / 2));
   transform: translate(-50%, -50%);
-  font-size: clamp(26px, 2.35vw, 42px);
+  font-size: clamp(24px, 2.2vw, 38px);
   color: rgba(20, 18, 16, 0.86);
   font-weight: 700;
   z-index: 1;
   line-height: 1.05;
   text-align: center;
-  width: min(170px, calc(var(--timeline-side-width) - 12px));
+  width: min(236px, calc(var(--timeline-side-width) - 4px));
   max-width: calc(var(--timeline-side-width) - 8px);
   white-space: normal;
-  overflow-wrap: anywhere;
+  overflow-wrap: normal;
   word-break: normal;
+  hyphens: none;
   padding: 14px 12px 12px;
   box-sizing: border-box;
   border: 1px solid rgba(52, 50, 42, 0.24);
@@ -666,7 +679,8 @@
 .vtimeline-step__axisYear .axisYear__line {
   display: block;
   max-width: 100%;
-  overflow-wrap: anywhere;
+  overflow-wrap: normal;
+  word-break: normal;
 }
 
 .vtimeline-step__axisYear .axisYear__line--nowrap {
@@ -1135,10 +1149,10 @@ body.no-scroll {
   }
 
   .mk__label {
-    font-size: 9px;
+    font-size: 11px;
   }
 
-  .topline__segment.seg--algorithmic {
+ .topline__segment.seg--algorithmic {
     width: 16px;
     min-width: 16px;
     margin-left: 0;
@@ -1149,7 +1163,7 @@ body.no-scroll {
   }
 
   .durationBar__seg {
-    height: 8px;
+    height: 6px;
     min-width: 8px;
     flex: var(--seg-ratio) 1 0;
   }
@@ -1212,7 +1226,7 @@ body.no-scroll {
     left: 50%;
     transform: translate(-50%, 0);
     font-size: clamp(18px, 5.2vw, 22px);
-    width: min(88vw, 286px);
+    width: min(92vw, 320px);
     text-align: center;
     z-index: 2;
     padding: 10px 10px 8px;
