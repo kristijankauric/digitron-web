@@ -1,6 +1,7 @@
 ﻿{% set currentLang = lang | default("hr") %}
 {% set t = i18n[currentLang] | default(i18n.hr) %}
 <section class="footer">
+  <div class="footer-circuit-layer" aria-hidden="true"></div>
   <footer class="footer3_component">
     <div class="padding-global">
       <div class="container-large-4">
@@ -9,7 +10,7 @@
             <div class="w-layout-grid footer3_top-wrapper">
               <div class="footer3_left-wrapper">
                 <div class="margin-bottom margin-medium footer-project__logo">
-                  <a href="{{ t.home_href | default('/hr/') }}" class="footer3_logo-link w-nav-brand"><img src="/assets/images/final/extra/FOTKE%20ZA%20VREMEPLOV/logo%20novi%20Digitron.Buje%20informati%C4%8Dka%20pri%C4%8Da%20copy%206.png" loading="lazy" alt="{{ t.logo_alt | default('digitron.buje logo') }}" class="logo-footer"/></a>
+                  <a href="{{ t.home_href | default('/hr/') }}" class="footer3_logo-link w-nav-brand"><img src="/assets/images/final/extra/Digitron.Buje%20logo%206.png" loading="lazy" alt="{{ t.logo_alt | default('digitron.buje logo') }}" class="logo-footer"/></a>
                 </div>
                 <div class="margin-bottom margin-small footer-media footer-project__media">
                   <video

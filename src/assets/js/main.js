@@ -444,6 +444,39 @@
         .replace(/(\d{3,4})\.(?=\s*(?:<br\s*\/?>|<\/span>|$))/g, "$1");
     }
 
+    function normalizeSegmentRangeLabels() {
+      var ranges = Array.prototype.slice.call(page.querySelectorAll(".seg__range"));
+      ranges.forEach(function (range) {
+        if (range.querySelector(".seg__range-split")) {
+          return;
+        }
+
+        var stack = range.querySelector(".seg__range-stack");
+        if (stack) {
+          var stackParts = Array.prototype.slice.call(stack.querySelectorAll("span")).map(function (el) {
+            return (el.textContent || "").trim();
+          }).filter(Boolean);
+          if (stackParts.length >= 2) {
+            range.innerHTML = '<span class="seg__range-flat"><span class="seg__range-flat-left">' +
+              stackParts[0] + '</span><span class="seg__range-flat-right">' + stackParts[1] + "</span></span>";
+          }
+          return;
+        }
+
+        var raw = (range.textContent || "").replace(/\s+/g, " ").trim();
+        if (!raw) {
+          return;
+        }
+        var parts = raw.split(/\s*[–-]\s*/);
+        if (parts.length >= 2) {
+          var left = parts[0].trim();
+          var right = parts.slice(1).join(" - ").trim();
+          range.innerHTML = '<span class="seg__range-flat"><span class="seg__range-flat-left">' +
+            left + '</span><span class="seg__range-flat-right">' + right + "</span></span>";
+        }
+      });
+    }
+
     syncToplineOffset();
     markers.forEach(function (mk) {
       var label = mk.querySelector(".mk__label");
@@ -459,6 +492,7 @@
       }
       axisYear.innerHTML = normalizeTimelineYearLabel(axisYear.innerHTML);
     });
+    normalizeSegmentRangeLabels();
     layoutToplineLabels();
     layoutDurationScaleLabels();
     layoutToplineConnectors();
@@ -958,6 +992,70 @@
     });
   }
 
+  function setupScrollRevealImages() {
+    var images = Array.prototype.slice.call(document.querySelectorAll(".scroll-reveal-image"));
+    if (!images.length) {
+      return;
+    }
+
+    if (!("IntersectionObserver" in window)) {
+      images.forEach(function (img) {
+        img.classList.add("is-visible");
+      });
+      return;
+    }
+
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) {
+          return;
+        }
+        entry.target.classList.add("is-visible");
+        observer.unobserve(entry.target);
+      });
+    }, {
+      threshold: 0.2,
+      rootMargin: "0px 0px -8% 0px"
+    });
+
+    images.forEach(function (img) {
+      observer.observe(img);
+    });
+  }
+
+  function setupFooterCircuitParallax() {
+    var layer = document.querySelector(".footer-circuit-layer");
+    var footer = document.querySelector("section.footer");
+    if (!layer || !footer) {
+      return;
+    }
+
+    var ticking = false;
+    function update() {
+      ticking = false;
+      var rect = footer.getBoundingClientRect();
+      var viewH = Math.max(window.innerHeight || 0, 1);
+      var start = viewH;
+      var end = -rect.height;
+      var progress = (start - rect.top) / (start - end);
+      progress = Math.max(0, Math.min(1, progress));
+      var y = Math.round(progress * 36) - 18;
+      layer.style.transform = "translate3d(0," + y + "px,0)";
+    }
+
+    function requestTick() {
+      if (ticking) {
+        return;
+      }
+      ticking = true;
+      window.requestAnimationFrame(update);
+    }
+
+    requestTick();
+    window.addEventListener("scroll", requestTick, { passive: true });
+    window.addEventListener("resize", requestTick, { passive: true });
+  }
+
   markFontsReady();
   setupLegacyHtmlRedirect();
 
@@ -969,6 +1067,8 @@
     setupSingleOpenDropdown();
     setupVremeplovTimeline();
     setupFooterLoopVideo();
+    setupScrollRevealImages();
+    setupFooterCircuitParallax();
   });
 })();
 

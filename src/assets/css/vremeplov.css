@@ -459,6 +459,22 @@
   line-height: 1.05;
 }
 
+.seg__range-flat {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 12px;
+}
+
+.seg__range-flat-left {
+  text-align: left;
+}
+
+.seg__range-flat-right {
+  text-align: right;
+}
+
 .topline__connector {
   fill: none;
   stroke-width: 1.5;
