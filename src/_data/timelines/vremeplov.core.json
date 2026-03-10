@@ -7,12 +7,18 @@
     {
       "key": "premechanical",
       "fromYear": -35000,
-      "toYear": 1622,
+      "toYear": -2500,
       "widthRatio": 1
     },
     {
-      "key": "mechanical",
+      "key": "algorithmic",
       "fromYear": 850,
+      "toYear": 851,
+      "widthRatio": 0.35
+    },
+    {
+      "key": "mechanical",
+      "fromYear": 1614,
       "toYear": 1899,
       "widthRatio": 1
     },
@@ -24,9 +30,9 @@
     },
     {
       "key": "quantum",
-      "fromYear": 2007,
+      "fromYear": 1977,
       "toYear": 2026,
-      "widthRatio": 1
+      "widthRatio": 1.15
     }
   ],
   "events": [
@@ -57,7 +63,7 @@
     {
       "id": "t-850-alkh",
       "yearSort": 850,
-      "segment": "mechanical",
+      "segment": "algorithmic",
       "image": "/assets/images/final/extra/FOTKE ZA VREMEPLOV/Al-Khwarizmi.jpg",
       "gap": "md",
       "isFeatured": false
@@ -98,7 +104,7 @@
       "id": "t-1899",
       "yearSort": 1899,
       "segment": "mechanical",
-      "image": "/assets/images/final/extra/FOTKE ZA VREMEPLOV/Industrijska proizvodnja mehani?kih kalkulatora.jpg",
+      "image": "/assets/images/final/extra/FOTKE ZA VREMEPLOV/Cash_register_-_Kroton_001.jpg",
       "gap": "md",
       "isFeatured": false
     },
@@ -106,15 +112,7 @@
       "id": "t-1930s",
       "yearSort": 1930,
       "segment": "digital",
-      "image": "/assets/images/final/extra/FOTKE ZA VREMEPLOV/5-Zuse_Patent_907948.jpg",
-      "gap": "md",
-      "isFeatured": false
-    },
-    {
-      "id": "t-1961",
-      "yearSort": 1961,
-      "segment": "digital",
-      "image": "/assets/images/final/extra/FOTKE ZA VREMEPLOV/8-608.jpg",
+      "image": "/assets/images/final/extra/FOTKE ZA VREMEPLOV/elektromehanika.webp",
       "gap": "md",
       "isFeatured": false
     },
@@ -122,7 +120,15 @@
       "id": "t-1960s-ic",
       "yearSort": 1960,
       "segment": "digital",
-      "image": "/assets/images/final/extra/FOTKE ZA VREMEPLOV/10-NMAH-77-7857.jpg",
+      "image": "/assets/images/final/extra/FOTKE ZA VREMEPLOV/Vlsiopamp2.gif",
+      "gap": "md",
+      "isFeatured": false
+    },
+    {
+      "id": "t-1961",
+      "yearSort": 1961,
+      "segment": "digital",
+      "image": "/assets/images/final/extra/FOTKE ZA VREMEPLOV/AnitaMk8-01.jpg",
       "gap": "md",
       "isFeatured": false
     },
@@ -141,6 +147,14 @@
       "image": "/assets/images/final/extra/FOTKE ZA VREMEPLOV/11-retro-digitron-1.jpg",
       "gap": "md",
       "isFeatured": true
+    },
+    {
+      "id": "t-1977-pc",
+      "yearSort": 1977,
+      "segment": "quantum",
+      "image": "/assets/images/final/extra/FOTKE ZA VREMEPLOV/pc.jpg",
+      "gap": "md",
+      "isFeatured": false
     },
     {
       "id": "t-2007",

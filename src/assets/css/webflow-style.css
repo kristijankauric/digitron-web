@@ -8912,3 +8912,18 @@ body label {
     animation: none;
   }
 }
+
+/* Mobile: keep audio controls visible directly below hero title text. */
+@media (max-width: 991px) {
+  .heroheader05_content.mobile-view-image .margin-top.margin-large.hide-on-mobile {
+    display: block !important;
+    position: static !important;
+    margin-top: 0.75rem !important;
+    margin-bottom: 0.9rem !important;
+  }
+
+  .heroheader05_content.mobile-view-image .button-row-4.is-reverse-mobile-landscape.margin-bottom.margin-medium {
+    display: flex !important;
+    margin-bottom: 0 !important;
+  }
+}

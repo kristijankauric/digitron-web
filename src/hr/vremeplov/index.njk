@@ -26,7 +26,7 @@ useTimelineStyles: true
           <div class="topline__durationWrap" aria-hidden="true">
             <div class="topline__durationScale">
               <span class="durationScale__label is-start" style="left: 0%;">{{ timeline.ui.scaleStartLabel }}</span>
-              <span class="durationScale__label is-mid" style="left: {{ zeroPosition }}%;">0.</span>
+              <span class="durationScale__label is-mid" style="left: {{ zeroPosition }}%;">0</span>
               <span class="durationScale__label is-end-right" style="left: 100%;">{{ timeline.ui.scaleEndLabel }}</span>
             </div>
             <div class="topline__durationBar">
@@ -44,22 +44,38 @@ useTimelineStyles: true
             <div class="topline__track" role="navigation" aria-label="{{ timeline.ui.trackAria }}">
             {% for segment in timeline.config.segments %}
             <div class="topline__segment seg seg--{{ segment.key }}" data-seg="{{ segment.key }}" style="--seg-ratio: {{ segment.widthRatio }};">
+              {% if segment.key != 'algorithmic' %}
               <div class="seg__head">
                 <span class="seg__title">
                   <span class="seg__title-main">{{ segment.labelMain or segment.label }}</span>
                   {% if segment.labelSub %}<span class="seg__title-sub">{{ segment.labelSub }}</span>{% endif %}
                 </span>
-                <span class="seg__range">{{ segment.rangeLabel }}</span>
+                <span class="seg__range">{{ (segment.rangeLabelHtml or segment.rangeLabel) | safe }}</span>
               </div>
+              {% else %}
+              <div class="seg__head seg__head--ghost" aria-hidden="true"></div>
+              {% endif %}
 
               <div class="seg__line">
                 {% for event in timeline.events %}
                 {% if event.segment == segment.key %}
-                {% set left = ((event.yearSort - segment.fromYear) / (segment.toYear - segment.fromYear)) * 100 %}
+                {% if segment.key == 'algorithmic' %}
+                {% set left = 50 %}
+                {% else %}
+                {% set rawLeft = ((event.yearSort - segment.fromYear) / (segment.toYear - segment.fromYear)) * 100 %}
+                {% set left = rawLeft %}
+                {% if left < 4 %}{% set left = 4 %}{% endif %}
+                {% if left > 96 %}{% set left = 96 %}{% endif %}
+                {% if segment.key == 'premechanical' and event.id == 't-3000bc-meso' and left > 92 %}{% set left = 92 %}{% endif %}
+                {% if segment.key == 'premechanical' and event.id == 't-2500bc' %}{% set left = 96 %}{% endif %}
+                {% if event.yearSort == segment.fromYear %}{% set left = 0 %}{% endif %}
+                {% if event.yearSort == segment.toYear and segment.key != 'premechanical' %}{% set left = 100 %}{% endif %}
+                {% endif %}
                 {% set markerLabel = event.toplineLabelHtml or event.yearLabel %}
                 {% set isMechanicalStart = segment.key == 'mechanical' and event.yearSort == segment.fromYear %}
-                {% set isLeftAlignedLabel = (segment.key == 'mechanical' and event.id == 't-1673') or event.id == 't-2019-quantum' %}
-                <button class="mk{% if event.isFeatured %} mk--featured{% else %} mk--global{% endif %}{% if isMechanicalStart %} mk--vertical-label{% endif %}{% if isLeftAlignedLabel %} mk--label-from-dot{% endif %}" type="button" data-target="{{ event.id }}" aria-label="{{ event.yearLabel }} - {{ event.title }}" style="left: {{ left }}%;">
+                {% set isStandaloneYear = segment.key == 'algorithmic' %}
+                {% set isSegmentStart = segment.key != 'algorithmic' and event.yearSort == segment.fromYear %}
+                <button class="mk{% if event.isFeatured %} mk--featured{% else %} mk--global{% endif %}{% if isMechanicalStart %} mk--vertical-label{% endif %}{% if isStandaloneYear %} mk--standalone-year{% endif %}{% if isSegmentStart %} mk--segment-start{% endif %}" type="button" data-target="{{ event.id }}" aria-label="{{ event.yearLabel }} - {{ event.title }}" style="left: {{ left }}%;">
                   <span class="mk__dot" aria-hidden="true"></span>
                   <span class="mk__label">{{ markerLabel | safe }}</span>
                 </button>
@@ -95,13 +111,13 @@ useTimelineStyles: true
             <div class="vtimeline-step__axisTick" aria-hidden="true"></div>
             <div class="vtimeline-step__axisYear" aria-hidden="true">{{ axisYear | safe }}</div>
 
-            <button class="vtimeline-step__icon" type="button" aria-label="{{ event.title }}" data-lb-image="{{ event.image }}" data-lb-title="{{ event.title }}" data-lb-detail="{{ event.detail }}" data-lb-era="{{ event.era }}">
+            <div class="vtimeline-step__icon" aria-label="{{ event.title }}">
               {% if event.image_placeholder or not event.image %}
               <span class="vtimeline-step__placeholder" aria-hidden="true"></span>
               {% else %}
               <img src="{{ event.image }}" alt="{{ event.title }}" class="vtimeline-step__image" loading="lazy" />
               {% endif %}
-            </button>
+            </div>
             {% if event.isFeatured and event.featuredLabel %}
             <div class="vtimeline-step__badge">{{ event.featuredLabel }}</div>
             {% endif %}
@@ -109,14 +125,19 @@ useTimelineStyles: true
 
           <aside class="vtimeline-step__info" data-info hidden>
             <div class="infoBox">
-              <div class="infoBox__head">
-                <span class="infoBox__meta">{{ event.era }}</span>
+              <div class="infoBox__bgLayer" aria-hidden="true"></div>
+              <div class="infoBox__content">
+                <div class="infoBox__head">
+                  <span class="infoBox__meta">{{ event.era }}</span>
+                </div>
+                {% set titleMain = event.title %}
+                {% if event.subtitle %}{% set titleMain = event.title | replace(" – " ~ event.subtitle, "") | replace(" â€“ " ~ event.subtitle, "") | replace(" - " ~ event.subtitle, "") %}{% endif %}
+                <h2 class="infoBox__title"><span class="infoBox__title-main">{{ titleMain }}</span>{% if event.subtitle %}<span class="infoBox__subtitle">{{ event.subtitle }}</span>{% endif %}</h2>
+                <p class="infoBox__body">{{ event.detail }}</p>
+                {% if event.isFeatured and event.ctaHref and event.ctaLabel %}
+                <p class="infoBox__ctaRow"><a class="infoBox__cta" href="{{ event.ctaHref }}">{{ event.ctaLabel }}</a></p>
+                {% endif %}
               </div>
-              <h2 class="infoBox__title">{{ event.title }}</h2>
-              <p>{{ event.detail }}</p>
-              {% if event.isFeatured and event.ctaHref and event.ctaLabel %}
-              <p><a class="infoBox__cta" href="{{ event.ctaHref }}">{{ event.ctaLabel }}</a></p>
-              {% endif %}
             </div>
           </aside>
         </div>
@@ -125,17 +146,4 @@ useTimelineStyles: true
     </div>
   </section>
 
-  <div class="vremeplov-lightbox" data-vremeplov-lightbox hidden aria-hidden="true">
-    <div class="vremeplov-lightbox__media">
-      <img class="vremeplov-lightbox__image" data-vremeplov-lightbox-image alt="" />
-    </div>
-    <div class="vremeplov-lightbox__panel" data-vremeplov-lightbox-panel>
-      <div class="vremeplov-lightbox__meta" data-vremeplov-lightbox-era></div>
-      <h2 class="vremeplov-lightbox__title" data-vremeplov-lightbox-title></h2>
-      <p class="vremeplov-lightbox__text" data-vremeplov-lightbox-detail></p>
-    </div>
-  </div>
 </main>
-
-
-

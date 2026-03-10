@@ -4,8 +4,8 @@
     "toplineAria": "Linija vremena (pregled)",
     "trackAria": "Navigacija kroz vrijeme",
     "vtimelineAria": "Povijest alata i strojeva za računanje",
-    "scaleStartLabel": "35 000. pr. n. e.",
-    "scaleEndLabel": "sadašnjost"
+    "scaleStartLabel": "35 000 pr. n. e.",
+    "scaleEndLabel": "danas"
   },
   "segments": [
     {
@@ -13,37 +13,46 @@
       "label": "Rani računski alati",
       "labelMain": "Rani računski",
       "labelSub": "alati",
-      "rangeLabel": "oko 35 000. pr. n. e. – 1622."
+      "rangeLabel": "oko 35 000 pr. n. e. – oko 2 500 pr. n. e.",
+      "rangeLabelHtml": "<span class=\"seg__range-split\"><span class=\"seg__range-date\"><span class=\"seg__range-value\">oko 35 000</span><span class=\"seg__range-sub\">pr. n. e.</span></span><span class=\"seg__range-divider\" aria-hidden=\"true\"></span><span class=\"seg__range-date\"><span class=\"seg__range-value\">oko 2 500</span><span class=\"seg__range-sub\">pr. n. e.</span></span></span>"
+    },
+    {
+      "key": "algorithmic",
+      "label": "Algoritmi i algebra",
+      "labelMain": "Algoritmi",
+      "labelSub": "i algebra",
+      "rangeLabel": "9. stoljeće"
     },
     {
       "key": "mechanical",
       "label": "Mehanički računski strojevi",
       "labelMain": "Mehanički računski",
       "labelSub": "strojevi",
-      "rangeLabel": "9. stoljeće – kraj 19. stoljeća"
+      "rangeLabelHtml": "<span class=\"seg__range-stack\"><span>1614 -</span><span>kraj 19. stoljeća</span></span>"
     },
     {
       "key": "digital",
       "label": "Električni i elektronički kalkulatori",
       "labelMain": "Električni i elektronički",
       "labelSub": "kalkulatori",
-      "rangeLabel": "1930-e – 1971."
+      "rangeLabel": "1930-e – 1971",
+      "rangeLabelHtml": "<span class=\"seg__range-split\"><span class=\"seg__range-date\"><span class=\"seg__range-value\">1930-e</span></span><span class=\"seg__range-divider\" aria-hidden=\"true\"></span><span class=\"seg__range-date\"><span class=\"seg__range-value\">1971</span></span></span>"
     },
     {
       "key": "quantum",
       "label": "Integrirani digitalni uređaji",
       "labelMain": "Integrirani digitalni",
       "labelSub": "uređaji",
-      "rangeLabel": "2007. – danas"
+      "rangeLabel": "1977 – danas"
     }
   ],
   "events": [
     {
       "id": "t-35000bc",
-      "yearLabel": "oko 35 000. pr. n. e.",
-      "toplineLabelHtml": "oko 35 000.<br>pr. n. e.",
-      "axisLabelHtml": "<span class=\"axisYear__line axisYear__line--nowrap\">oko 35 000.</span><span class=\"axisYear__line\">pr. n. e.</span>",
-      "title": "Lebombo kost – najstariji trag bilježenja količina",
+      "yearLabel": "oko 35 000 pr. n. e.",
+      "toplineLabelHtml": "oko 35 000<br>pr. n. e.",
+      "axisLabelHtml": "<span class=\"axisYear__line axisYear__line--nowrap\">oko&nbsp;35&nbsp;000</span><span class=\"axisYear__line\">pr. n. e.</span>",
+      "title": "Lebombo kost",
       "subtitle": "Najstariji trag bilježenja količina",
       "era": "Rani računski alati",
       "tooltip": "Najstariji dokaz namjernog bilježenja količine.",
@@ -51,9 +60,9 @@
     },
     {
       "id": "t-3000bc-meso",
-      "yearLabel": "oko 3000. pr. n. e.",
-      "toplineLabelHtml": "oko 3000.<br>pr. n. e.",
-      "axisLabelHtml": "<span class=\"axisYear__line axisYear__line--nowrap\">oko 3000.</span><span class=\"axisYear__line\">pr. n. e.</span>",
+      "yearLabel": "oko 3 000 pr. n. e.",
+      "toplineLabelHtml": "oko 3 000<br>pr. n. e.",
+      "axisLabelHtml": "<span class=\"axisYear__line axisYear__line--nowrap\">oko&nbsp;3&nbsp;000</span><span class=\"axisYear__line\">pr. n. e.</span>",
       "title": "Mezopotamija – prvi zapis brojeva",
       "subtitle": "Brojevi na glinenim pločicama",
       "era": "Rani računski alati",
@@ -63,9 +72,9 @@
     },
     {
       "id": "t-2500bc",
-      "yearLabel": "oko 2500. pr. n. e.",
-      "toplineLabelHtml": "oko 2500.<br>pr. n. e.",
-      "axisLabelHtml": "<span class=\"axisYear__line axisYear__line--nowrap\">oko 2500.</span><span class=\"axisYear__line\">pr. n. e.</span>",
+      "yearLabel": "oko 2 500 pr. n. e.",
+      "toplineLabelHtml": "oko 2 500<br>pr. n. e.",
+      "axisLabelHtml": "<span class=\"axisYear__line axisYear__line--nowrap\">oko&nbsp;2&nbsp;500</span><span class=\"axisYear__line\">pr. n. e.</span>",
       "title": "Abakus – prvi sustavni računski alat",
       "subtitle": "Sustavno računanje kuglicama",
       "era": "Rani računski alati",
@@ -75,25 +84,26 @@
     {
       "id": "t-850-alkh",
       "yearLabel": "9. stoljeće",
+      "axisLabelHtml": "<span class=\"axisYear__line\">9.&nbsp;stoljeće</span>",
       "title": "Al-Khwarizmi (Perzija) – algoritmi i algebra",
       "subtitle": "Sustavni postupci računanja",
-      "era": "Mehanički računski strojevi",
+      "era": "Algoritmi i algebra",
       "tooltip": "Rani temelji algoritamskog razmišljanja.",
       "detail": "U Bagdadu, jednom od tadašnjih znanstvenih centara, Al-Khwarizmi opisuje sustavne postupke računanja i rješavanja problema – ono što danas zovemo algoritmima. Njegova algebra pomaže računati sa simbolima, a ne samo s konkretnim brojevima. Odatle dolazi i riječ “algoritam”.",
       "image": "/assets/images/final/extra/FOTKE ZA VREMEPLOV/Al-Khwarizmi.jpg"
     },
     {
       "id": "t-1614-1622",
-      "yearLabel": "1614. – 1622.",
+      "yearLabel": "1614 – 1622",
       "title": "Logaritmi i logaritamsko računalo – prvi “inženjerski” računski alat",
       "subtitle": "Prijelaz prema inženjerskom računanju",
       "era": "Mehanički računski strojevi",
       "tooltip": "Logaritmi i slide rule kao glavni alat inženjera.",
-      "detail": "U Škotskoj John Napier uvodi logaritme (1614.), a ubrzo se pojavljuje logaritamsko računalo – slide rule (1622.). Ono pretvara teško množenje i dijeljenje u pomicanje skala i brzo očitavanje rezultata. Stoljećima je to bio glavni alat inženjera i znanstvenika, sve do elektroničkih kalkulatora."
+      "detail": "U Škotskoj John Napier uvodi logaritme (1614), a ubrzo se pojavljuje logaritamsko računalo – slide rule (1622). Ono pretvara teško množenje i dijeljenje u pomicanje skala i brzo očitavanje rezultata. Stoljećima je to bio glavni alat inženjera i znanstvenika, sve do elektroničkih kalkulatora."
     },
     {
       "id": "t-1642",
-      "yearLabel": "1642.",
+      "yearLabel": "1642",
       "title": "Pascalina – prvi mehanički kalkulator",
       "subtitle": "Računanje prelazi na mehanizam",
       "era": "Mehanički računski strojevi",
@@ -102,7 +112,7 @@
     },
     {
       "id": "t-1673",
-      "yearLabel": "1673.",
+      "yearLabel": "1673",
       "title": "Leibnizov računski stroj – sve 4 operacije",
       "subtitle": "Mehaničko računanje postaje svestrano",
       "era": "Mehanički računski strojevi",
@@ -111,7 +121,7 @@
     },
     {
       "id": "t-1822",
-      "yearLabel": "1822.",
+      "yearLabel": "1822",
       "title": "Babbageov Difference Engine – stroj koji računa tablice",
       "subtitle": "Korak prema programabilnosti",
       "era": "Mehanički računski strojevi",
@@ -121,6 +131,8 @@
     {
       "id": "t-1899",
       "yearLabel": "kraj 19. stoljeća",
+      "toplineLabelHtml": "kraj<br>19. stoljeća",
+      "axisLabelHtml": "<span class=\"axisYear__line\">kraj</span><span class=\"axisYear__line\">19.&nbsp;stoljeća</span>",
       "title": "Industrijska proizvodnja mehaničkih kalkulatora",
       "subtitle": "Računanje ulazi u urede i tvornice",
       "era": "Mehanički računski strojevi",
@@ -138,7 +150,7 @@
     },
     {
       "id": "t-1961",
-      "yearLabel": "1961.",
+      "yearLabel": "1961",
       "title": "ANITA (UK) – prvi potpuno elektronički kalkulator",
       "subtitle": "Kraj mehaničke ere",
       "era": "Električni i elektronički kalkulatori",
@@ -156,7 +168,7 @@
     },
     {
       "id": "t-1971-micro",
-      "yearLabel": "1971.",
+      "yearLabel": "1971",
       "title": "Mikroprocesor – računalo na jednom čipu",
       "subtitle": "“Mozak” uređaja staje na čip",
       "era": "Električni i elektronički kalkulatori",
@@ -165,7 +177,7 @@
     },
     {
       "id": "t-1971-digitron",
-      "yearLabel": "1971.",
+      "yearLabel": "1971",
       "title": "DIGITRON DB-800 – prvi europski digitalni džepni kalkulator",
       "subtitle": "Europski odgovor iz Istre",
       "era": "Električni i elektronički kalkulatori",
@@ -176,8 +188,17 @@
       "ctaLabel": "Pročitaj više o Digitronu"
     },
     {
+      "id": "t-1977-pc",
+      "yearLabel": "1977",
+      "title": "Osobna računala – računalo dolazi na radni stol",
+      "subtitle": "Računalo izlazi iz laboratorija i ulazi u škole, urede i domove",
+      "era": "Integrirani digitalni uređaji",
+      "tooltip": "Prva osobna računala približavaju računalstvo širokom krugu ljudi.",
+      "detail": "Krajem 1970-ih pojavljuju se prva osobna računala namijenjena pojedincima, a ne velikim institucijama. Modeli poput Apple II, Commodore PET i TRS-80 donose računalo iz laboratorija i tvrtki u škole, urede i domove. Računalo prvi put postaje alat koji može koristiti gotovo svatko. Apple II iz 1977 jedno je od prvih računala koje se prodavalo kao gotov proizvod koji se samo uključi i koristi."
+    },
+    {
       "id": "t-2007",
-      "yearLabel": "2007.",
+      "yearLabel": "2007",
       "title": "iPhone (SAD) – računalo u džepu za svakoga",
       "subtitle": "Računanje postaje mainstream",
       "era": "Integrirani digitalni uređaji",
@@ -186,12 +207,12 @@
     },
     {
       "id": "t-2019-quantum",
-      "yearLabel": "2019.",
+      "yearLabel": "2019",
       "title": "Kvantno računanje – novi tip računala",
       "subtitle": "Početak nove ere",
       "era": "Integrirani digitalni uređaji",
       "tooltip": "Qubiti otvaraju novi pristup računanju.",
-      "detail": "Kvantna računala koriste qubite, koji se ponašaju drugačije od klasičnih bitova (0/1). Godine 2019. (SAD) se snažno popularizira ideja “kvantne nadmoći” za specifične zadatke. Ovo je početak nove ere računanja, još uvijek uglavnom u laboratorijima."
+      "detail": "Kvantna računala koriste qubite, koji se ponašaju drugačije od klasičnih bitova (0/1). Godine 2019 (SAD) se snažno popularizira ideja “kvantne nadmoći” za specifične zadatke. Ovo je početak nove ere računanja, još uvijek uglavnom u laboratorijima."
     }
   ]
 }
