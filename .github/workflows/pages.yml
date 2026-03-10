@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - novi-vremeplov
+      - feature/timeline-fix
 
 permissions:
   contents: read
